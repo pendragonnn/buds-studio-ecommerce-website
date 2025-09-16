@@ -1,6 +1,6 @@
 <x-app-layout>
     {{-- Hero Section --}}
-    <section class="bg-pink-100 py-16">
+    <section id="hero" class="bg-pink-100 pt-32 pb-16">
         <div class="container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
                 Welcome to Buds Studio
