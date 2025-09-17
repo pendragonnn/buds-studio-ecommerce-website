@@ -1,45 +1,90 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            {{-- Left side --}}
-            <div class="flex items-center">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
+<nav x-data="{
+         open: false,
+         activeSection: ''
+     }" x-init="
+         const observer = new IntersectionObserver((entries) => {
+             entries.forEach(entry => {
+                 if (entry.isIntersecting) {
+                     activeSection = entry.target.id;
+                 }
+             });
+         }, {
+             rootMargin: '-50% 0px -50% 0px'
+         });
 
-                <!-- Navigation Links (admin only for now) -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @auth
-                        @if(auth()->user()->role->name === 'admin')
-                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                                {{ __('Dashboard') }}
-                            </x-nav-link>
-                        @endif
-                    @endauth
-                </div>
+         document.querySelectorAll('section[id]').forEach(section => {
+             observer.observe(section);
+         });
+     " class="bg-white border-b border-gray-100 shadow sticky top-0 w-full z-50">
+
+    {{-- Kode untuk mobile hamburger menu --}}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            {{-- Logo --}}
+            <div class="shrink-0 flex items-center">
+                <a href="{{ route('home') }}" class="flex items-center space-x-1">
+                    <x-application-logo class="block h-12 w-auto fill-current text-pink-500" />
+                    <span class="font-bold text-xl text-[#e38593]">Buds Studio</span>
+                </a>
             </div>
 
-            {{-- Right side --}}
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            {{-- Hamburger menu for mobile --}}
+            <div class="-mr-2 flex items-center sm:hidden">
+                <button @click="open = ! open"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            {{-- Center menu (desktop) --}}
+            <div class="hidden sm:flex sm:items-center sm:space-x-8">
+                <x-nav-link href="#hero">
+                    {{ __('Home') }}
+                </x-nav-link>
+                <x-nav-link href="#products">
+                    {{ __('Products') }}
+                </x-nav-link>
+                <x-nav-link href="#custom-order">
+                    {{ __('Custom Order') }}
+                </x-nav-link>
+                <x-nav-link href="#contact">
+                    {{ __('Contact') }}
+                </x-nav-link>
+
+                {{-- Only Admin: Dashboard link --}}
+                @auth
+                    @if(auth()->user()->role->name === 'admin')
+                        <x-nav-link :href="route('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    @endif
+                @endauth
+            </div>
+
+            {{-- Right side (desktop) --}}
+            <div class="hidden sm:flex sm:items-center sm:space-x-4">
                 @guest
                     {{-- Guest: Show login button --}}
-                    <a href="{{ route('login') }}" 
-                       class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
+                    <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'"
+                        class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-200">
                         {{ __('Login / Register') }}
-                    </a>
+                    </button>
                 @else
                     {{-- If logged in --}}
                     <div class="flex items-center space-x-4">
                         {{-- Customer: Show cart icon --}}
                         @if(auth()->user()->role->name === 'customer')
-                            <a href="#" class="relative">
-                                <svg class="w-6 h-6 text-gray-700 hover:text-pink-500" fill="none" 
-                                     stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m4-9l2 9" />
+                            <a href="" class="relative">
+                                <svg class="w-7 h-7 text-gray-700 hover:text-pink-500" fill="none" stroke="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                                 </svg>
                             </a>
                         @endif
@@ -47,11 +92,11 @@
                         {{-- User dropdown (profile photo) --}}
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
-                                <p>{{ auth()->user()->name }}</p>
-                                <button class="flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none">
-                                    <img class="h-8 w-8 rounded-full object-cover" 
-                                         src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}" 
-                                         alt="{{ auth()->user()->name }}">
+                                <button
+                                    class="flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none">
+                                    <img class="h-10 w-10 rounded-full object-cover"
+                                        src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}"
+                                        alt="{{ auth()->user()->name }}">
                                 </button>
                             </x-slot>
 
@@ -60,14 +105,13 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                {{-- If admin: add Dashboard shortcut --}}
+                                {{-- Admin shortcut --}}
                                 @if(auth()->user()->role->name === 'admin')
                                     <x-dropdown-link :href="route('admin.dashboard')">
                                         {{ __('Admin Dashboard') }}
                                     </x-dropdown-link>
                                 @endif
 
-                                <!-- Logout -->
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <x-dropdown-link :href="route('logout')"
@@ -80,6 +124,47 @@
                     </div>
                 @endguest
             </div>
+        </div>
+    </div>
+
+    {{-- Mobile menu --}}
+    <div x-show="open" x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="sm:hidden h-[100dvh] fixed inset-x-0 bottom-0 top-20 bg-white border-t border-gray-100 shadow-lg p-4">
+        <div class="space-y-1">
+            <a href="#hero"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Home</a>
+            <a href="#products"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Products</a>
+            <a href="#custom-order"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Custom
+                Order</a>
+            <a href="#contact"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Contact</a>
+            @auth
+                @if(auth()->user()->role->name === 'admin')
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Dashboard</a>
+                @endif
+            @endauth
+        </div>
+        <div class="mt-4 border-t border-gray-200 pt-4">
+            @guest
+                <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'"
+                    class="w-full bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-200">
+                    {{ __('Login / Register') }}
+                </button>
+            @else
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="block w-full text-center text-gray-700 hover:text-gray-900 transition">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
+            @endguest
         </div>
     </div>
 </nav>
