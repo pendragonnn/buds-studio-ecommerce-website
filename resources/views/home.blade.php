@@ -6,12 +6,34 @@
                 Welcome to Buds Studio
             </h1>
             <p class="text-lg text-gray-600 mb-6">
-                Handcrafted press-on nails & stylish phone straps, made with love ✨
+                Discover our collection of premium press-on nails and phone staps. <br/> Express your style with our unique designs!
             </p>
             <a href="#products" 
                class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg shadow-md transition">
                 Shop Now
             </a>
+        </div>
+    </section>
+
+    {{-- Categories Section --}}
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Our Categories</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                @foreach($categories as $category)
+                    <div class="bg-white shadow-md rounded-3xl overflow-hidden hover:shadow-lg transition">
+                        <img src="{{ $category->image_url ?? 'images/default-product.jpg' }}" 
+                             alt="{{ $category->name }}" 
+                             class="w-full h-52 md:h-60 lg:h-80 object-cover">
+                        <div class="p-8 flex flex-col justify-center items-center gap-5">
+                            <h3 class="text-xl font-semibold text-gray-700">{{ $category->name }}</h3>
+                            <p class="text-gray-500 text-center">{{ $category->description }}</p>
+                            <a href="#product" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg shadow-md transition">View Collection</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -21,23 +43,15 @@
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Our Products</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                @foreach($products as $product)
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition">
-                        <img src="{{ asset($product->image_url ?? 'images/default-product.jpg') }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-48 object-cover">
-                        <div class="p-4 flex flex-col justify-center items-center gap-3">
-                            <h3 class="text-xl font-semibold text-gray-700">{{ $product->name }}</h3>
-                            <p class="text-gray-500">{{ $product->category->name ?? 'Uncategorized' }}</p>
-                            <p class="text-pink-600 font-bold mt-2">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-
-                            @auth
-                                @if(auth()->user()->role->name === 'customer')
-                                    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg w-full">
-                                        Add to Cart
-                                    </button>
-                                @endif
-                            @endauth
+                @foreach($categories as $category)
+                    <div class="bg-white shadow-md rounded-3xl overflow-hidden hover:shadow-lg transition">
+                        <img src="{{ $category->image_url ?? 'images/default-product.jpg' }}" 
+                             alt="{{ $category->name }}" 
+                             class="w-full h-52 md:h-60 lg:h-80 object-cover">
+                        <div class="p-8 flex flex-col justify-center items-center gap-5">
+                            <h3 class="text-xl font-semibold text-gray-700">{{ $category->name }}</h3>
+                            <p class="text-gray-500 text-center">{{ $category->description }}</p>
+                            <a href="#product" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg shadow-md transition">View Collection</a>
                         </div>
                     </div>
                 @endforeach
