@@ -75,7 +75,8 @@
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-700">{{ $product->name }}</h3>
                                     <p class="text-lg font-bold text-pink-500 mt-1">Rp
-                                        {{ number_format($product->price, 0, ',', '.') }}</p>
+                                        {{ number_format($product->price, 0, ',', '.') }}
+                                    </p>
                                     <p class="text-gray-500 text-sm mt-2 line-clamp-2">{{ $product->description }}</p>
                                 </div>
                             </div>
@@ -140,6 +141,10 @@
             </div>
         </div>
     </section>
+
+    {{-- Auth Modal --}}
+    @include('components.auth-modal')
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const products = document.querySelectorAll('.product-card');
