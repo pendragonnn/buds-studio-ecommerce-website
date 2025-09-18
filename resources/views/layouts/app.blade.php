@@ -13,7 +13,7 @@
 
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/cart.js'])
         
         <!-- Alpine.js x-cloak styling -->
         <style>
@@ -25,6 +25,10 @@
                 open: false,
                 tab: 'login'
             });
+            Alpine.store('cart', {
+                open: false,
+                items: []
+            })
         });
     </script>
     </head>

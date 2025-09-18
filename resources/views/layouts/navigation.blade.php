@@ -1,6 +1,6 @@
 <nav x-data="{
          open: false,
-         activeSection: ''
+         activeSection: '',
      }" x-init="
          const observer = new IntersectionObserver((entries) => {
              entries.forEach(entry => {
@@ -80,13 +80,18 @@
                     <div class="flex items-center space-x-4">
                         {{-- Customer: Show cart icon --}}
                         @if(auth()->user()->role->name === 'customer')
-                            <a href="" class="relative">
+                            <button @click="$store.cart.open = true" class="relative">
                                 <svg class="w-7 h-7 text-gray-700 hover:text-pink-500" fill="none" stroke="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                                 </svg>
-                            </a>
+                                {{-- badge jumlah item --}}
+                                <span id="cart-count"
+                                    class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                                    0
+                                </span>
+                            </button>
                         @endif
 
                         {{-- User dropdown (profile photo) --}}
@@ -132,27 +137,52 @@
         x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
         x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="sm:hidden h-[100dvh] fixed inset-x-0 bottom-0 top-20 bg-white border-t border-gray-100 shadow-lg p-4">
+        class="sm:hidden h-[100dvh] fixed inset-x-0 bottom-0 top-20 bg-white border-t border-gray-100 shadow-lg p-4 overflow-y-auto">
+
         <div class="space-y-1">
-            <a href="#hero"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Home</a>
-            <a href="#products"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Products</a>
-            <a href="#custom-order"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Custom
-                Order</a>
-            <a href="#contact"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Contact</a>
+            <a href="#hero" @click="open = false"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                Home
+            </a>
+            <a href="#products" @click="open = false"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                Products
+            </a>
+            <a href="#custom-order" @click="open = false"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                Custom Order
+            </a>
+            <a href="#contact" @click="open = false"
+                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                Contact
+            </a>
             @auth
                 @if(auth()->user()->role->name === 'admin')
-                    <a href="{{ route('admin.dashboard') }}"
-                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}" @click="open = false"
+                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                        Dashboard
+                    </a>
+                @endif
+            @endauth
+
+            {{-- Customer: Cart --}}
+            @auth
+                @if(auth()->user()->role->name === 'customer')
+                    <button @click="$store.cart.open = true; open = false"
+                        class="w-full flex items-center justify-between px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                        <span>Cart</span>
+                        <span id="cart-count-mobile"
+                            class="ml-2 bg-pink-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+                            0
+                        </span>
+                    </button>
                 @endif
             @endauth
         </div>
+
         <div class="mt-4 border-t border-gray-200 pt-4">
             @guest
-                <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'"
+                <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'; open = false"
                     class="w-full bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-200">
                     {{ __('Login / Register') }}
                 </button>
@@ -160,7 +190,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();"
-                        class="block w-full text-center text-gray-700 hover:text-gray-900 transition">
+                        @click="open = false" class="block w-full text-center text-gray-700 hover:text-gray-900 transition">
                         {{ __('Log Out') }}
                     </a>
                 </form>
@@ -168,3 +198,6 @@
         </div>
     </div>
 </nav>
+
+{{-- Cart Sidebar --}}
+<x-cart-sidebar />
