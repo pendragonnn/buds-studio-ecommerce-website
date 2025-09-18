@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartContainer = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
     const countEl = document.getElementById("cart-count");
+    const countMobileEl = document.getElementById("cart-count-mobile");
 
     cartContainer.innerHTML = "";
     let total = 0;
@@ -73,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     totalEl.textContent = `Rp ${total.toLocaleString()}`;
     countEl.textContent = count;
+    countMobileEl.textContent = count;
   }
 
   // Event listener buat add-to-cart
@@ -96,3 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // expose function buat onclick remove
   window.removeFromCart = removeFromCart;
 });
+
+function updateCheckoutTotal() {
+    const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    document.getElementById('checkout-total').innerText = 'Rp ' + total.toLocaleString();
+}
+document.addEventListener('DOMContentLoaded', updateCheckoutTotal);
+
