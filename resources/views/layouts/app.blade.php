@@ -13,7 +13,7 @@
 
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/cart.js'])
         
         <!-- Alpine.js x-cloak styling -->
         <style>
@@ -25,7 +25,35 @@
                 open: false,
                 tab: 'login'
             });
-        });
+            Alpine.store('cart', {
+                open: false,
+                items: []
+            });
+
+            Alpine.store('checkout', {
+                open: false,
+                step: 1,
+                data: {
+                    name: '',
+                    phone: '',
+                    address: '',
+                    province: '',
+                    city: '',
+                    district: '',
+                    subdistrict: '',
+                    postal_code: ''
+                },
+                paymentMethod: null,
+                get paymentMethodLabel() {
+                    switch (this.paymentMethod) {
+                        case 'bank': return 'Bank Transfer (BCA, Mandiri, BNI)';
+                        case 'ewallet': return 'E-Wallet (GoPay, OVO, DANA)';
+                        case 'cod': return 'Cash on Delivery';
+                        default: return '-';
+                    }
+                }
+            })
+        })
     </script>
     </head>
     <body class="font-sans antialiased">

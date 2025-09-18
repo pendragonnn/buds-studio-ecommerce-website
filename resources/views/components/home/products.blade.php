@@ -44,7 +44,10 @@
               @if(auth()->user()->role->name === 'customer')
                 <div class="px-8 pb-8 pt-0">
                   <button
-                    class="add-to-cart-btn bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg w-full transition">
+                    class="add-to-cart-btn bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg w-full transition"
+                    data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
+                    data-stock="{{ $product->stock }}"
+                    data-image="{{ asset($product->image_url ?? 'images/default-product.jpg') }}">
                     Add to Cart
                   </button>
                 </div>
