@@ -4,8 +4,7 @@
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 relative">
     {{-- Close Button --}}
     <button @click="$store.checkout.open = false; $store.checkout.step = 1; const form = document.getElementById('checkout-form');
-        if (form) form.reset();"
-      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        if (form) form.reset();" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
       ✕
     </button>
 
@@ -87,15 +86,15 @@
       {{-- Payment Methods --}}
       <h3 class="text-lg font-semibold mb-2 text-center">Payment Methods</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <button type="button" @click="$store.checkout.paymentMethod = 'bank'"
-          :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'bank'}"
+        <button type="button" @click="$store.checkout.paymentMethod = 'bank_transfer'"
+          :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'bank_transfer'}"
           class="border rounded-lg p-4 text-center hover:bg-gray-100">
           <p class="font-bold">Bank Transfer</p>
           <p class="text-sm text-gray-500">BCA, Mandiri, BNI</p>
         </button>
 
-        <button type="button" @click="$store.checkout.paymentMethod = 'ewallet'"
-          :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'ewallet'}"
+        <button type="button" @click="$store.checkout.paymentMethod = 'e_wallet'"
+          :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'e_wallet'}"
           class="border rounded-lg p-4 text-center hover:bg-gray-100">
           <p class="font-bold">E-Wallet</p>
           <p class="text-sm text-gray-500">GoPay, OVO, DANA</p>
@@ -111,15 +110,21 @@
 
       {{-- Confirm Button --}}
       <div class="flex justify-end mt-6">
-        <button type="button" @click="$store.checkout.step = 3;localStorage.removeItem('buds_cart');
-        document.getElementById('cart-items').innerHTML = '';
-        document.getElementById('cart-total').innerText = 'Rp 0';
-        document.getElementById('cart-count').innerText = '0';
-        document.getElementById('cart-count-mobile').innerText = '0';
-        "
-          class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
-          Confirm Order
-        </button>
+        <div class="flex justify-end mt-6">
+          <button type="button" @click="$store.checkout.step = 3;
+            if ($store.checkout.paymentMethod) {
+              $dispatch('place-order');
+            } else {
+              alert('Choose a payment method');
+            }
+            document.getElementById('cart-items').innerHTML = '';
+            document.getElementById('cart-total').innerText = 'Rp 0';
+            document.getElementById('cart-count').innerText = '0';
+            document.getElementById('cart-count-mobile').innerText = '0';"
+            class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
+            Confirm Order
+          </button>
+        </div>
       </div>
     </div>
 
@@ -173,3 +178,80 @@
 
   </div>
 </div>
+
+<script>
+  // pastikan script ini dimuat setelah Alpine & DOM ready
+  async function submitOrderToServer() {
+    // read checkout data from Alpine store
+    const checkout = window.Alpine.store('checkout').data;
+    const paymentMethod = window.Alpine.store('checkout').paymentMethod;
+    const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+
+    if (!cart.length) {
+      alert('Your cart is empty');
+      return;
+    }
+
+    // Build payload
+    const payload = {
+      checkout: checkout,
+      payment_method: paymentMethod,
+      cart: cart.map(item => ({ id: item.id, quantity: item.quantity }))
+    };
+
+    try {
+      const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      const res = await fetch("{{ route('checkout.store') }}".replace(window.location.origin, ''), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': token,
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin'
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        // server responded with error (validation/stock)
+        console.error(data);
+        // show user-friendly message
+        if (data.message) alert(data.message);
+        return;
+      }
+
+      // success
+      console.log('order created:', data);
+      // move to step 3 in Alpine store, show confirmation UI
+      window.Alpine.store('checkout').step = 3;
+
+      // clear cart & update UI counts
+      localStorage.removeItem('buds_cart');
+      const cartItemsEl = document.getElementById('cart-items');
+      if (cartItemsEl) cartItemsEl.innerHTML = '';
+      const cartTotalEl = document.getElementById('cart-total');
+      if (cartTotalEl) cartTotalEl.innerText = 'Rp 0';
+      const countEl = document.getElementById('cart-count');
+      if (countEl) countEl.innerText = '0';
+      const countMobileEl = document.getElementById('cart-count-mobile');
+      if (countMobileEl) countMobileEl.innerText = '0';
+
+      // optional: show success toast
+      alert('Order placed successfully! Order ID: ' + data.order_id);
+
+    } catch (err) {
+      console.error(err);
+      alert('Failed to place order. Please try again.');
+    }
+  }
+
+  document.addEventListener('alpine:init', () => {
+    // listen custom event triggered by Alpine
+    document.addEventListener('place-order', (e) => {
+      submitOrderToServer();
+    });
+  });
+</script>

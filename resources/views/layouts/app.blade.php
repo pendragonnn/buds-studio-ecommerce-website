@@ -27,7 +27,10 @@
             });
             Alpine.store('cart', {
                 open: false,
-                items: []
+                items: JSON.parse(localStorage.getItem('buds_cart') || '[]'),
+                syncWithStorage() {
+                    this.items = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+                }
             });
 
             Alpine.store('checkout', {
@@ -46,8 +49,8 @@
                 paymentMethod: null,
                 get paymentMethodLabel() {
                     switch (this.paymentMethod) {
-                        case 'bank': return 'Bank Transfer (BCA, Mandiri, BNI)';
-                        case 'ewallet': return 'E-Wallet (GoPay, OVO, DANA)';
+                        case 'bank_transfer': return 'Bank Transfer (BCA, Mandiri, BNI)';
+                        case 'e_wallet': return 'E-Wallet (GoPay, OVO, DANA)';
                         case 'cod': return 'Cash on Delivery';
                         default: return '-';
                     }
