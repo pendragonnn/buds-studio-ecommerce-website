@@ -33,10 +33,13 @@ Route::post('/checkout', [CheckoutController::class, 'store'])
 // Admin routes (protected by middleware)
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    // Daftarkan rute secara manual
+
     Route::post('/admin/products', [DashboardController::class, 'storeProduct'])->name('admin.products.store');
     Route::put('/admin/products/{product}', [DashboardController::class, 'updateProduct'])->name('admin.products.update');
     Route::delete('/admin/products/{product}', [DashboardController::class, 'destroyProduct'])->name('admin.products.destroy');
+
+    // Orders
+    Route::put('/admin/orders/{order}/confirm-payment', [DashboardController::class, 'confirmPayment'])->name('admin.orders.confirmPayment');
 });
 
 require __DIR__ . '/auth.php';
