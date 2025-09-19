@@ -29,24 +29,7 @@
             </div>
 
             {{-- Hamburger menu for mobile --}}
-            <div class="-mr-2 flex items-center gap-x-5 sm:hidden">
-                {{-- Customer: Cart --}}
-                @auth
-                    @if(auth()->user()->role->name === 'customer')
-                        <button @click="$store.cart.open = true" class="relative">
-                            <svg class="w-7 h-7 text-gray-700 hover:text-pink-500" fill="none" stroke="currentColor"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-                            </svg>
-                            {{-- badge jumlah item --}}
-                            <span id="cart-count-mobile"
-                                class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                                0
-                            </span>
-                        </button>
-                    @endif
-                @endauth
+            <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -60,29 +43,37 @@
             </div>
 
             {{-- Center menu (desktop) --}}
-            <div class="hidden sm:flex sm:items-center sm:space-x-8">
-                <x-nav-link href="#hero">
-                    {{ __('Home') }}
-                </x-nav-link>
-                <x-nav-link href="#products">
-                    {{ __('Products') }}
-                </x-nav-link>
-                <x-nav-link href="#custom-order">
-                    {{ __('Custom Order') }}
-                </x-nav-link>
-                <x-nav-link href="#contact">
-                    {{ __('Contact') }}
-                </x-nav-link>
+            @if(auth()->guest() || auth()->user()->role->name === 'customer')
+                <div class="hidden sm:flex sm:items-center sm:space-x-8">
+                    <x-nav-link href="#hero">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    <x-nav-link href="#products">
+                        {{ __('Products') }}
+                    </x-nav-link>
+                    <x-nav-link href="#custom-order">
+                        {{ __('Custom Order') }}
+                    </x-nav-link>
+                    <x-nav-link href="#contact">
+                        {{ __('Contact') }}
+                    </x-nav-link>
 
-                {{-- Only Admin: Dashboard link --}}
-                @auth
-                    @if(auth()->user()->role->name === 'admin')
-                        <x-nav-link :href="route('admin.dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    @endif
-                @endauth
-            </div>
+                    {{-- Only Admin: Dashboard link --}}
+                    @auth
+                        @if(auth()->user()->role->name === 'admin')
+                            <x-nav-link :href="route('admin.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
+                </div>
+            @elseif(auth()->user()->role->name === 'admin')
+                <div class="hidden sm:flex sm:items-center sm:space-x-8">
+                    <h1 class="font-semibold text-xl text-gray-800 leading-tight">
+                        Admin Dashboard
+                    </h1>
+                </div>
+            @endif
 
             {{-- Right side (desktop) --}}
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
@@ -156,34 +147,50 @@
         x-transition:leave-end="opacity-0 scale-95"
         class="sm:hidden h-[100dvh] fixed inset-x-0 bottom-0 top-20 bg-white border-t border-gray-100 shadow-lg p-4 overflow-y-auto">
 
-        <div class="space-y-1">
-            <a href="#hero" @click="open = false"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                Home
-            </a>
-            <a href="#products" @click="open = false"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                Products
-            </a>
-            <a href="#custom-order" @click="open = false"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                Custom Order
-            </a>
-            <a href="#contact" @click="open = false"
-                class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                Contact
-            </a>
-            @auth
-                @if(auth()->user()->role->name === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" @click="open = false"
-                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                        Dashboard
-                    </a>
-                @endif
-            @endauth
+        @if(auth()->guest() || auth()->user()->role->name === 'customer')
+            <div class="space-y-1">
+                <a href="#hero" @click="open = false"
+                    class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                    Home
+                </a>
+                <a href="#products" @click="open = false"
+                    class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                    Products
+                </a>
+                <a href="#custom-order" @click="open = false"
+                    class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                    Custom Order
+                </a>
+                <a href="#contact" @click="open = false"
+                    class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                    Contact
+                </a>
 
-
-        </div>
+                {{-- Customer: Cart --}}
+                @auth
+                    @if(auth()->user()->role->name === 'customer')
+                        <button @click="$store.cart.open = true; open = false"
+                            class="w-full flex items-center justify-between px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                            <span>Cart</span>
+                            <span id="cart-count-mobile"
+                                class="ml-2 bg-pink-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+                                0
+                            </span>
+                        </button>
+                    @endif
+                @endauth
+            </div>
+        @elseif(auth()->user()->role->name === 'admin')
+            <div class="space-y-1">
+                <h1 class="px-4 py-2 text-base font-semibold text-gray-800">
+                    Admin Dashboard
+                </h1>
+                <a href="{{ route('admin.dashboard') }}" @click="open = false"
+                    class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                    Dashboard
+                </a>
+            </div>
+        @endif
 
         <div class="mt-4 border-t border-gray-200 pt-4">
             @guest
