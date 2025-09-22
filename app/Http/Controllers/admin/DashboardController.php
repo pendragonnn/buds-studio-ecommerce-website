@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Testimony;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,12 @@ class DashboardController extends Controller
         $completedOrders = $orders->where('status', 'completed')->count();
         $totalRevenue = $orders->sum('total_amount');
 
+        // Ratings summary
+        $reviews = Testimony::with('order.user')->latest()->get();
+        $totalReviews = $reviews->count();
+        $averageRating = $reviews->avg('rating');
+        $fiveStarReviews = $reviews->where('rating', 5)->count();
+
         return view('admin.dashboard', compact(
             'products',
             'categories',
@@ -31,7 +38,11 @@ class DashboardController extends Controller
             'totalOrders',
             'pendingOrders',
             'completedOrders',
-            'totalRevenue'
+            'totalRevenue',
+            'reviews',
+            'totalReviews',
+            'averageRating',
+            'fiveStarReviews'
         )); // blade: resources/views/admin/dashboard.blade.php
     }
 
