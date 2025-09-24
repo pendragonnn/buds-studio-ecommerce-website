@@ -20,6 +20,11 @@
                         class="px-4 py-2 rounded-lg font-medium">
                         Orders
                     </button>
+                    <button @click="tab = 'users'"
+                        :class="tab === 'users' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
+                        class="px-4 py-2 rounded-lg font-medium">
+                        Users
+                    </button>
                     <button @click="tab = 'ratings'"
                         :class="tab === 'ratings' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium">
@@ -38,7 +43,9 @@
                 <div x-show="tab === 'orders'" x-transition>
                     @include('admin.tabs.orders')
                 </div>
-
+                <div x-show="tab === 'users'" x-transition>
+                    @include('admin.tabs.users')
+                </div>
                 <div x-show="tab === 'ratings'" x-transition>
                     @include('admin.tabs.ratings')
                 </div>

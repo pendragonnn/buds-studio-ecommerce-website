@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\Testimony;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -31,6 +32,9 @@ class DashboardController extends Controller
         $averageRating = $reviews->avg('rating');
         $fiveStarReviews = $reviews->where('rating', 5)->count();
 
+        $roles = Role::all();
+        $users = \App\Models\User::with('role')->get();
+
         return view('admin.dashboard', compact(
             'products',
             'categories',
@@ -42,7 +46,9 @@ class DashboardController extends Controller
             'reviews',
             'totalReviews',
             'averageRating',
-            'fiveStarReviews'
+            'fiveStarReviews',
+            'roles',
+            'users'
         )); // blade: resources/views/admin/dashboard.blade.php
     }
 
