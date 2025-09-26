@@ -25,14 +25,26 @@
     @foreach ($reviews->take(5) as $review)
       <div class="flex items-start justify-between bg-gray-50 p-4 rounded-lg">
         <div>
+          {{-- user name --}}
           <p class="font-semibold text-gray-800">
-            {{ $review->order->user->name ?? 'Unknown User' }}
+            {{ $review->orderDetail->order->user->name ?? 'Unknown User' }}
           </p>
-          <p class="text-gray-600 text-sm">{{ $review->comment }}</p>
+
+          {{-- product name --}}
+          <p class="text-sm text-pink-600">
+            {{ $review->orderDetail->product->name ?? 'Unknown Product' }}
+          </p>
+
+          {{-- comment --}}
+          <p class="text-gray-600 text-sm mt-1">{{ $review->comment }}</p>
         </div>
+
+        {{-- stars --}}
         <div class="flex text-yellow-400">
           @for ($star = 1; $star <= 5; $star++)
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 {{ $star <= $review->rating ? 'fill-current' : 'stroke-current text-gray-300' }}" viewBox="0 0 20 20">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="h-5 w-5 {{ $star <= $review->rating ? 'fill-current' : 'stroke-current text-gray-300' }}" 
+                 viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.955a1 1 0 
                        00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.37 
                        2.449a1 1 0 00-.364 1.118l1.287 3.955c.3.921-.755 

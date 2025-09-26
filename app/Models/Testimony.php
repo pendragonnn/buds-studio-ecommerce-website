@@ -10,13 +10,13 @@ class Testimony extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id',
+        'order_detail_id',
         'rating',
         'comment',
     ];
 
-    public function order()
+    public function orderDetail()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(OrderDetail::class);
     }
 }

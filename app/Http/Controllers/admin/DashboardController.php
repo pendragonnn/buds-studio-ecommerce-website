@@ -25,10 +25,12 @@ class DashboardController extends Controller
         $totalRevenue = $orders->where('status', 'completed')->sum('total_amount');
 
         // Ratings summary
-        $reviews = Testimony::with('order.user')->latest()->get();
+        $reviews = Testimony::with(['orderDetail.product', 'orderDetail.order.user'])->latest()->get();
         $totalReviews = $reviews->count();
         $averageRating = $reviews->avg('rating');
         $fiveStarReviews = $reviews->where('rating', 5)->count();
+
+        // dd($reviews->toArray());
 
         $roles = Role::all();
         $users = \App\Models\User::with('role')->get();

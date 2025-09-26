@@ -10,10 +10,10 @@ return new class extends Migration
     {
         Schema::create('testimonies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')
+            $table->foreignId('order_detail_id')
                   ->unique()
-                  ->constrained('orders')
-                  ->onDelete('cascade'); // kalau order dihapus, testimoninya ikut
+                  ->constrained('order_details')
+                  ->onDelete('cascade'); 
             $table->tinyInteger('rating'); // 1-5
             $table->text('comment')->nullable();
             $table->timestamps();

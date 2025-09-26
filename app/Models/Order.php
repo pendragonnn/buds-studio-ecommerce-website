@@ -29,10 +29,5 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
-
-    public function testimony()
-    {
-        return $this->hasOne(Testimony::class);
-    }
 }
 
