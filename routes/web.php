@@ -8,6 +8,7 @@ use App\Http\Middleware\CheckRole;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OrderController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -45,8 +46,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/products/{product}', [DashboardController::class, 'updateProduct'])->name('admin.products.update');
     Route::delete('/admin/products/{product}', [DashboardController::class, 'destroyProduct'])->name('admin.products.destroy');
 
-    // Orders
-    Route::put('/admin/orders/{order}/confirm-payment', [DashboardController::class, 'confirmPayment'])->name('admin.orders.confirmPayment');
+     // Orders
+    Route::put('/admin/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
+    Route::put('/admin/orders/{order}/confirm-payment', [OrderController::class, 'confirmPayment'])->name('admin.orders.confirmPayment');
 });
 
 require __DIR__ . '/auth.php';

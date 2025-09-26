@@ -24,7 +24,7 @@ class DashboardController extends Controller
         $totalOrders = $orders->count();
         $pendingOrders = $orders->where('status', 'pending')->count();
         $completedOrders = $orders->where('status', 'completed')->count();
-        $totalRevenue = $orders->sum('total_amount');
+        $totalRevenue = $orders->where('status', 'completed' )->sum('total_amount');
 
         // Ratings summary
         $reviews = Testimony::with('order.user')->latest()->get();
@@ -48,21 +48,8 @@ class DashboardController extends Controller
             'averageRating',
             'fiveStarReviews',
             'roles',
-            'users'
+            'users',
         )); // blade: resources/views/admin/dashboard.blade.php
-    }
-
-    // Confirm Payment
-    public function confirmPayment(Order $order)
-    {
-        $payment = Payment::where('order_id', $order->id)->first();
-
-        if ($payment) {
-            $payment->update(['status' => 'paid']);
-            $order->update(['status' => 'completed']);
-        }
-
-        return back()->with('success', 'Payment confirmed successfully.');
     }
 
     public function storeProduct(Request $request)
