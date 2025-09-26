@@ -1,5 +1,6 @@
 <div class="bg-white shadow rounded-xl p-6" 
-     x-data="{ openView: false, order: {} }">
+     x-data="{ order: {}, openConfirm: false, openView: false, openCancel: false }">
+
   <h3 class="text-lg font-semibold mb-6">Orders Management</h3>
 
   {{-- Summary Cards --}}
@@ -45,6 +46,7 @@
               <span class="px-3 py-1 rounded-lg text-sm
                 @if($o->status == 'completed') bg-green-100 text-green-700
                 @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
+                @elseif($o->status == 'cancelled') bg-red-100 text-red-700
                 @else bg-blue-100 text-blue-700 @endif">
                 {{ ucfirst($o->status) }}
               </span>
@@ -52,19 +54,26 @@
             <td class="px-4 py-2 text-center">{{ $o->created_at->format('Y-m-d') }}</td>
             <td class="px-4 py-2 flex gap-2 justify-center">
               {{-- View --}}
-              <button @click="openView = true; order = {{ $o->toJson() }}"
-                      class="bg-gray-200 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-300">
+              <button @click="openView = true; order = {{ $o->load('orderDetails.product')->toJson() }}"
+                class="bg-gray-200 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-300">
                 View
               </button>
+
+              {{-- Cancel --}}
+              @if($o->status == 'pending')
+                  <button type="submit" @click="openCancel = true; order = {{ $o->toJson() }}"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600">
+                    Cancel
+                    {{-- {{dd($o->id)}} --}}
+                  </button>
+              @endif
+
               {{-- Confirm Payment --}}
               @if($o->status == 'pending')
-                <form action="{{ route('admin.orders.confirmPayment', $o->id) }}" method="POST">
-                  @csrf @method('PUT')
-                  <button type="submit"
-                          class="bg-pink-500 text-white px-3 py-1 rounded-lg hover:bg-pink-600">
-                    Confirm Payment
-                  </button>
-                </form>
+                <button @click="openConfirm = true; order = {{ $o->toJson() }}"
+                  class="bg-pink-500 text-white px-3 py-1 rounded-lg hover:bg-pink-600">
+                  Confirm Payment
+                </button>
               @endif
             </td>
           </tr>
@@ -73,20 +82,69 @@
     </table>
   </div>
 
-  {{-- View Modal --}}
+  {{-- Confirm Payment Modal --}}
+  <div x-show="openConfirm" x-cloak 
+       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-sm text-center">
+      <h2 class="text-lg font-bold mb-4">Confirm Payment</h2>
+      <p class="mb-6">Confirm payment for 
+        <span class="font-semibold text-pink-600">Order #<span x-text="order.id"></span></span>?
+      </p>
+      <form :action="'/admin/orders/' + order.id + '/confirm-payment'" method="POST" class="flex justify-center gap-2">
+        @csrf
+        @method('PUT')
+        <button type="button" @click="openConfirm = false" 
+          class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
+        <button type="submit" 
+          class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  {{-- Cancel Order Modal --}}
+  <div x-show="openCancel" x-cloak 
+       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-sm text-center">
+      <h2 class="text-lg font-bold mb-4">Cancel Order</h2>
+      <p class="mb-6">Cancel order for 
+        <span class="font-semibold text-pink-600">Order #<span x-text="order.id"></span></span>?
+      </p>
+      <form :action="'/admin/orders/' + order.id + '/cancel'" method="POST" class="flex justify-center gap-2">
+        @csrf
+        @method('PUT')
+        <button type="button" @click="openCancel = false" 
+          class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
+        <button type="submit" 
+          class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">
+          Confirm
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {{-- View Order Modal --}}
   <div x-show="openView" x-cloak 
        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-lg">
       <h2 class="text-lg font-bold mb-4">Order Detail</h2>
       <p><strong>Order ID:</strong> <span x-text="order.id"></span></p>
-      <p><strong>Customer:</strong> <span x-text="order.user?.name"></span></p>
-      <p><strong>Status:</strong> <span x-text="order.status"></span></p>
+      <p><strong>Customer:</strong> <span x-text="order.user.name"></span></p>
       <p><strong>Total:</strong> Rp <span x-text="order.total_amount"></span></p>
+      <p><strong>Status:</strong> <span x-text="order.status"></span></p>
+      
+      <h3 class="mt-4 font-semibold">Items</h3>
+      <ul class="list-disc pl-6">
+        <template x-for="item in order.order_details" :key="item.id">
+          <li>
+            <span x-text="item.product.name"></span> - Qty: <span x-text="item.quantity"></span>
+          </li>
+        </template>
+      </ul>
 
-      {{-- Close --}}
-      <div class="flex justify-end mt-4">
-        <button @click="openView = false"
-                class="px-4 py-2 bg-gray-300 rounded-lg">Close</button>
+      <div class="mt-4 flex justify-end">
+        <button @click="openView = false" class="px-4 py-2 bg-gray-300 rounded-lg">Close</button>
       </div>
     </div>
   </div>

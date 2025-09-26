@@ -25,4 +25,9 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function testimony()
+    {
+        return $this->hasOne(Testimony::class, 'order_detail_id');
+    }
 }
