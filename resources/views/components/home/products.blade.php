@@ -39,18 +39,24 @@
               </div>
             </div>
 
-            {{-- Tombol Add to Cart --}}
+            {{-- Tombol Add to Cart atau Out of Stock --}}
             @auth
               @if(auth()->user()->role->name === 'customer')
-                <div class="px-8 pb-8 pt-0">
-                  <button
-                    class="add-to-cart-btn bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg w-full transition"
-                    data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
-                    data-stock="{{ $product->stock }}"
-                    data-image="{{ asset($product->image_url ?? 'images/default-product.jpg') }}">
-                    Add to Cart
-                  </button>
-                </div>
+                @if($product->stock > 0)
+                  <div class="px-8 pb-8 pt-0">
+                    <button
+                      class="add-to-cart-btn bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg w-full transition"
+                      data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
+                      data-stock="{{ $product->stock }}"
+                      data-image="{{ asset($product->image_url ?? 'images/default-product.jpg') }}">
+                      Add to Cart
+                    </button>
+                  </div>
+                @else
+                  <div class="px-8 pb-10 pt-0">
+                    <p class="text-red-500 font-semibold">Out of Stock</p>
+                  </div>
+                @endif
               @endif
             @endauth
           </div>

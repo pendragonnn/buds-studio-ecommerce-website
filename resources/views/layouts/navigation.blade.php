@@ -67,11 +67,13 @@
                         @endif
 
                         {{-- Only Customer: My Orders link --}}
-                        @if(auth()->user()->role->name === 'customer')
-                            <x-nav-link :href="route('my-orders.index')">
-                                {{ __('My Orders') }}
-                            </x-nav-link>
-                        @endif
+                        @auth
+                            @if(auth()->user()->role->name === 'customer')
+                                <x-nav-link :href="route('my-orders.index')">
+                                    {{ __('My Orders') }}
+                                </x-nav-link>
+                            @endif
+                        @endauth
                     @endauth
                 </div>
             @elseif(auth()->user()->role->name === 'admin')
@@ -179,12 +181,14 @@
 
 
                 {{-- Only Customer: My Orders link --}}
-                @if(auth()->user()->role->name === 'customer')
-                    <a href="{{ route('my-orders.index') }}" @click="open = false"
-                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
-                        My Orders
-                    </a>
-                @endif
+                @auth
+                    @if(auth()->user()->role->name === 'customer')
+                        <a href="{{ route('my-orders.index') }}" @click="open = false"
+                            class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                            My Orders
+                        </a>
+                    @endif
+                @endauth
 
                 {{-- Customer: Cart --}}
                 @auth
