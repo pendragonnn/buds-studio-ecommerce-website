@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const cartKey = "buds_cart";
+  // ambil userId dari body attribute (di Blade kasih: <body data-user-id="{{ auth()->id() ?? 'guest' }}">
+  const userId = document.body.dataset.userId || "guest";
+  const cartKey = `buds_cart_${userId}`;
 
   // ambil cart dari localStorage
   function getCart() {
@@ -38,47 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart();
   }
 
-  // render cart ke sidebar
-  // function renderCart() {
-  //   let cart = getCart();
-  //   const cartContainer = document.getElementById("cart-items");
-  //   const totalEl = document.getElementById("cart-total");
-  //   const countEl = document.getElementById("cart-count");
-  //   const countMobileEl = document.getElementById("cart-count-mobile");
-
-  //   cartContainer.innerHTML = "";
-  //   let total = 0;
-  //   let count = 0;
-
-  //   cart.forEach(item => {
-  //     let isOut = item.stock <= 0;
-
-  //     if (!isOut) {
-  //       total += item.price * item.quantity;
-  //       count += item.quantity;
-  //     }
-
-  //     cartContainer.innerHTML += `
-  //         <div class="flex items-center gap-4 border-b pb-4 mb-4">
-  //             <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
-  //             <div class="flex-1">
-  //                 <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
-  //                 <p class="text-sm">Quantity: ${item.quantity}</p>
-  //                 <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
-  //                 ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
-  //             </div>
-  //             <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
-  //         </div>
-  //       `;
-  //   });
-
-  //   totalEl.textContent = `Rp ${total.toLocaleString()}`;
-  //   countEl.textContent = count;
-  //   countMobileEl.textContent = count;
-  // }
-
-  // Event listener buat add-to-cart
-
+  // render cart ke sidebar & checkout
   function renderCart() {
     let cart = getCart();
     const cartContainer = document.getElementById("cart-items");
@@ -88,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const countEl = document.getElementById("cart-count");
     const countMobileEl = document.getElementById("cart-count-mobile");
 
-    cartContainer.innerHTML = "";
+    if (cartContainer) cartContainer.innerHTML = "";
     let total = 0;
     let count = 0;
 
@@ -100,29 +62,31 @@ document.addEventListener("DOMContentLoaded", () => {
         count += item.quantity;
       }
 
-      cartContainer.innerHTML += `
-      <div class="flex items-center gap-4 border-b pb-4 mb-4">
-        <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
-        <div class="flex-1">
-          <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
-          <p class="text-sm">Quantity: ${item.quantity}</p>
-          <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
-          ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
-        </div>
-        <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
-      </div>
-    `;
+      if (cartContainer) {
+        cartContainer.innerHTML += `
+          <div class="flex items-center gap-4 border-b pb-4 mb-4">
+            <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
+            <div class="flex-1">
+              <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
+              <p class="text-sm">Quantity: ${item.quantity}</p>
+              <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
+              ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
+            </div>
+            <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        `;
+      }
     });
 
     // Update semua UI
-    totalEl.textContent = `Rp ${total.toLocaleString()}`;
+    if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString()}`;
     if (checkoutTotalEl) checkoutTotalEl.textContent = `Rp ${total.toLocaleString()}`;
     if (checkoutTotalFinalEl) checkoutTotalFinalEl.textContent = `Rp ${total.toLocaleString()}`;
-    countEl.textContent = count;
-    countMobileEl.textContent = count;
+    if (countEl) countEl.textContent = count;
+    if (countMobileEl) countMobileEl.textContent = count;
   }
 
-
+  // Event listener buat add-to-cart
   document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const product = {
@@ -137,17 +101,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // biar pertama kali langsung render
+  // render cart pertama kali
   renderCart();
 
   // expose function buat onclick remove
   window.removeFromCart = removeFromCart;
+
+  // update checkout total pas DOM ready
+  updateCheckoutTotal();
+  
+  function updateCheckoutTotal() {
+    const cart = getCart();
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const checkoutTotal = document.getElementById('checkout-total');
+    if (checkoutTotal) checkoutTotal.innerText = 'Rp ' + total.toLocaleString();
+  }
 });
-
-function updateCheckoutTotal() {
-  const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  document.getElementById('checkout-total').innerText = 'Rp ' + total.toLocaleString();
-}
-document.addEventListener('DOMContentLoaded', updateCheckoutTotal);
-
