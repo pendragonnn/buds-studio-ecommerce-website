@@ -20,15 +20,19 @@ class CheckoutController extends Controller
         // basic validation
         $data = $request->validate([
             'checkout' => 'required|array',
-            'checkout.name' => 'required|string|max:150',
-            'checkout.phone' => 'required|string|max:30',
+            'checkout.name' => 'nullable|string|max:150', // biar bisa ambil dari user login
+            'checkout.phone' => 'nullable|string|max:30',
             'checkout.address' => 'required|string|max:1000',
             'checkout.province' => 'nullable|string',
+            'checkout.province_name' => 'nullable|string',
             'checkout.city' => 'nullable|string',
+            'checkout.city_name' => 'nullable|string',
             'checkout.district' => 'nullable|string',
+            'checkout.district_name' => 'nullable|string',
             'checkout.subdistrict' => 'nullable|string',
+            'checkout.subdistrict_name' => 'nullable|string',
             'checkout.postal_code' => 'nullable|string|max:20',
-            'payment_method' => ['required', Rule::in(['bank_transfer','e_wallet','cod'])],
+            'payment_method' => ['required', Rule::in(['bank_transfer', 'e_wallet'])],
             'cart' => 'required|array|min:1',
             'cart.*.id' => 'required|integer|distinct',
             'cart.*.quantity' => 'required|integer|min:1',
@@ -44,7 +48,14 @@ class CheckoutController extends Controller
                 'name' => $data['checkout']['name'],
                 'phone' => $data['checkout']['phone'],
                 // we store full address into users.address column
-                'address' => $data['checkout']['address'] . ($data['checkout']['city'] ? ', ' . $data['checkout']['city'] : ''),
+                'address' => collect([
+                    $data['checkout']['address'],
+                    $data['checkout']['subdistrict_name'] ?? null,
+                    $data['checkout']['district_name'] ?? null,
+                    $data['checkout']['city_name'] ?? null,
+                    $data['checkout']['province_name'] ?? null,
+                    $data['checkout']['postal_code'] ?? null,
+                ])->filter()->join(', '),
             ]);
 
             // 2) Re-check stock and compute total
@@ -54,7 +65,7 @@ class CheckoutController extends Controller
 
             foreach ($cart as $cartItem) {
                 $product = Product::lockForUpdate()->find($cartItem['id']); // lock row
-                if (! $product) {
+                if (!$product) {
                     DB::rollBack();
                     return response()->json(['message' => "Product (id: {$cartItem['id']}) not found."], 404);
                 }
@@ -93,9 +104,6 @@ class CheckoutController extends Controller
                     'quantity' => $od['quantity'],
                     'subtotal' => $od['subtotal'],
                 ]);
-
-                // update stock
-                $od['product']->decrement('stock', $od['quantity']);
             }
 
             // 5) Create Payment record

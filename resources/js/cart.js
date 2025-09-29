@@ -39,10 +39,52 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // render cart ke sidebar
+  // function renderCart() {
+  //   let cart = getCart();
+  //   const cartContainer = document.getElementById("cart-items");
+  //   const totalEl = document.getElementById("cart-total");
+  //   const countEl = document.getElementById("cart-count");
+  //   const countMobileEl = document.getElementById("cart-count-mobile");
+
+  //   cartContainer.innerHTML = "";
+  //   let total = 0;
+  //   let count = 0;
+
+  //   cart.forEach(item => {
+  //     let isOut = item.stock <= 0;
+
+  //     if (!isOut) {
+  //       total += item.price * item.quantity;
+  //       count += item.quantity;
+  //     }
+
+  //     cartContainer.innerHTML += `
+  //         <div class="flex items-center gap-4 border-b pb-4 mb-4">
+  //             <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
+  //             <div class="flex-1">
+  //                 <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
+  //                 <p class="text-sm">Quantity: ${item.quantity}</p>
+  //                 <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
+  //                 ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
+  //             </div>
+  //             <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
+  //         </div>
+  //       `;
+  //   });
+
+  //   totalEl.textContent = `Rp ${total.toLocaleString()}`;
+  //   countEl.textContent = count;
+  //   countMobileEl.textContent = count;
+  // }
+
+  // Event listener buat add-to-cart
+
   function renderCart() {
     let cart = getCart();
     const cartContainer = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
+    const checkoutTotalEl = document.getElementById("checkout-total");
+    const checkoutTotalFinalEl = document.getElementById("checkout-total-final");
     const countEl = document.getElementById("cart-count");
     const countMobileEl = document.getElementById("cart-count-mobile");
 
@@ -59,25 +101,28 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       cartContainer.innerHTML += `
-          <div class="flex items-center gap-4 border-b pb-4 mb-4">
-              <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
-              <div class="flex-1">
-                  <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
-                  <p class="text-sm">Quantity: ${item.quantity}</p>
-                  <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
-                  ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
-              </div>
-              <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
-          </div>
-        `;
+      <div class="flex items-center gap-4 border-b pb-4 mb-4">
+        <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
+        <div class="flex-1">
+          <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
+          <p class="text-sm">Quantity: ${item.quantity}</p>
+          <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
+          ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
+        </div>
+        <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
+    `;
     });
 
+    // Update semua UI
     totalEl.textContent = `Rp ${total.toLocaleString()}`;
+    if (checkoutTotalEl) checkoutTotalEl.textContent = `Rp ${total.toLocaleString()}`;
+    if (checkoutTotalFinalEl) checkoutTotalFinalEl.textContent = `Rp ${total.toLocaleString()}`;
     countEl.textContent = count;
     countMobileEl.textContent = count;
   }
 
-  // Event listener buat add-to-cart
+
   document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const product = {
@@ -87,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         stock: parseInt(btn.dataset.stock),
         image_url: btn.dataset.image,
       };
-      
+
       addToCart(product);
     });
   });
@@ -100,9 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function updateCheckoutTotal() {
-    const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    document.getElementById('checkout-total').innerText = 'Rp ' + total.toLocaleString();
+  const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  document.getElementById('checkout-total').innerText = 'Rp ' + total.toLocaleString();
 }
 document.addEventListener('DOMContentLoaded', updateCheckoutTotal);
 
