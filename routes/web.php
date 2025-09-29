@@ -30,7 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/my-orders/{order}/complete', [MyOrderController::class, 'complete'])->name('my-orders.complete');
 });
 
-
+Route::middleware('auth')->group(function () {
+    Route::post('/my-orders/{orderDetail}/testimony', [MyOrderController::class, 'storeTestimony'])->name('my-orders.testimony.store');
+    Route::put('/my-orders/{orderDetail}/testimony', [MyOrderController::class, 'updateTestimony'])->name('my-orders.testimony.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
