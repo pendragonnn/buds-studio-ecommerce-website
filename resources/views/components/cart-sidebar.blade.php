@@ -61,6 +61,11 @@ x-cloak>
 
     <div x-show="cartItems.length === 0" class="flex-1 flex flex-col items-center justify-center p-4 text-gray-500">
         <p>Your cart is empty.</p>
+        <a href="{{ request()->routeIs('home') ? '#products' : route('home') . '#products' }}"
+           @click="$store.cart.open = false"
+           class="mt-4 bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition">
+           Browse Products
+        </a>
     </div>
 </div>
 

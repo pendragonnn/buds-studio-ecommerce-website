@@ -215,7 +215,7 @@
     // read checkout data from Alpine store
     const checkout = window.Alpine.store('checkout').data;
     const paymentMethod = window.Alpine.store('checkout').paymentMethod;
-    const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+    const cart = JSON.parse(localStorage.getItem(`buds_cart_${document.body.dataset.userId}`) || '[]');
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const totalEl = document.getElementById('checkout-total');
     if (totalEl) totalEl.innerText = 'Rp ' + total.toLocaleString();
@@ -299,6 +299,7 @@
     // listen custom event triggered by Alpine
     document.addEventListener('place-order', (e) => {
       submitOrderToServer();
+      localStorage.removeItem(`buds_cart_${document.body.dataset.userId}`);
     });
   });
 </script>
