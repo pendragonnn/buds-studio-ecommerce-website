@@ -1,5 +1,5 @@
 {{-- resources/views/components/checkout-modal.blade.php --}}
-<div x-data x-show="$store.checkout.open" x-transition.opacity
+<div x-data x-show="$store.checkout.open" x-transition.opacity x-init="$store.checkout.init()"
   class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" x-cloak>
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 relative">
     {{-- Close Button --}}
@@ -21,24 +21,48 @@
         <input type="text" placeholder="Alamat Lengkap" x-model="$store.checkout.data.address"
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
 
-        {{-- Dropdown wilayah (sementara static dulu) --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <select x-model="$store.checkout.data.province" class="w-full border rounded-lg px-4 py-2">
-            <option>Provinsi</option>
-          </select>
-          <select x-model="$store.checkout.data.city" class="w-full border rounded-lg px-4 py-2">
-            <option>Kota</option>
-          </select>
-        </div>
+        <select x-model="$store.checkout.data.province" @change="
+          const prov = $store.checkout.provinces.find(p => p.id == $event.target.value);
+          $store.checkout.data.province_name = prov ? prov.name : '';
+          $store.checkout.fetchCities($event.target.value)
+        " class="w-full border rounded-lg px-4 py-2">
+          <option value="">Pilih Provinsi</option>
+          <template x-for="prov in $store.checkout.provinces" :key="prov.id">
+            <option :value="prov.id" x-text="prov.name"></option>
+          </template>
+        </select>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <select x-model="$store.checkout.data.district" class="w-full border rounded-lg px-4 py-2">
-            <option>Kecamatan</option>
-          </select>
-          <select x-model="$store.checkout.data.subdistrict" class="w-full border rounded-lg px-4 py-2">
-            <option>Kelurahan</option>
-          </select>
-        </div>
+        <select x-model="$store.checkout.data.city" @change="
+          const city = $store.checkout.cities.find(c => c.id == $event.target.value);
+          $store.checkout.data.city_name = city ? city.name : '';
+          $store.checkout.fetchDistricts($event.target.value)
+        " class="w-full border rounded-lg px-4 py-2">
+          <option value="">Pilih Kota</option>
+          <template x-for="city in $store.checkout.cities" :key="city.id">
+            <option :value="city.id" x-text="city.name"></option>
+          </template>
+        </select>
+
+        <select x-model="$store.checkout.data.district" @change="
+          const dist = $store.checkout.districts.find(d => d.id == $event.target.value);
+          $store.checkout.data.district_name = dist ? dist.name : '';
+          $store.checkout.fetchSubdistricts($event.target.value)
+        " class="w-full border rounded-lg px-4 py-2">
+          <option value="">Pilih Kecamatan</option>
+          <template x-for="district in $store.checkout.districts" :key="district.id">
+            <option :value="district.id" x-text="district.name"></option>
+          </template>
+        </select>
+
+        <select x-model="$store.checkout.data.subdistrict" @change="
+          const sub = $store.checkout.subdistricts.find(s => s.id == $event.target.value);
+          $store.checkout.data.subdistrict_name = sub ? sub.name : '';
+        " class="w-full border rounded-lg px-4 py-2">
+          <option value="">Pilih Kelurahan</option>
+          <template x-for="sub in $store.checkout.subdistricts" :key="sub.id">
+            <option :value="sub.id" x-text="sub.name"></option>
+          </template>
+        </select>
 
         <input type="text" placeholder="Kode Pos" x-model="$store.checkout.data.postal_code"
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
@@ -63,8 +87,10 @@
         <p x-text="$store.checkout.data.phone"></p>
         <p x-text="$store.checkout.data.address"></p>
         <p>
-          <span x-text="$store.checkout.data.city"></span>,
-          <span x-text="$store.checkout.data.province"></span>,
+          <span x-text="$store.checkout.data.subdistrict_name"></span>,
+          <span x-text="$store.checkout.data.district_name"></span>,
+          <span x-text="$store.checkout.data.city_name"></span>,
+          <span x-text="$store.checkout.data.province_name"></span>,
           <span x-text="$store.checkout.data.postal_code"></span>
         </p>
       </div>
