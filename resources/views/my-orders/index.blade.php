@@ -59,9 +59,74 @@
 
                         <div class="divide-y">
                             @foreach($order->orderDetails as $detail)
-                                <div class="flex justify-between py-2">
-                                    <span>{{ $detail->product->name }} x {{ $detail->quantity }}</span>
-                                    <span>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</span>
+                                <div class="py-2">
+                                    <div class="flex justify-between">
+                                        <span>{{ $detail->product->name }} x {{ $detail->quantity }}</span>
+                                        <span>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</span>
+                                    </div>
+
+                                    {{-- Testimony section (only for completed orders) --}}
+                                    @if($order->status === 'completed')
+                                        <div class="mt-3">
+                                            @if($detail->testimony)
+                                                <div class="bg-gray-50 p-3 rounded">
+                                                    <div class="flex items-center mb-2">
+                                                        @for($i=1; $i<=5; $i++)
+                                                            <svg class="w-5 h-5 {{ $i <= $detail->testimony->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.17 3.6a1 1 0 00.95.69h3.8c.969 0 1.371 1.24.588 1.81l-3.076 2.236a1 1 0 00-.364 1.118l1.17 3.6c.3.921-.755 1.688-1.54 1.118l-3.076-2.236a1 1 0 00-1.176 0l-3.076 2.236c-.784.57-1.838-.197-1.539-1.118l1.17-3.6a1 1 0 00-.364-1.118L2.54 9.027c-.783-.57-.38-1.81.588-1.81h3.8a1 1 0 00.95-.69l1.17-3.6z"/>
+                                                            </svg>
+                                                        @endfor
+                                                    </div>
+                                                    <p class="text-gray-600 text-sm">{{ $detail->testimony->comment }}</p>
+                                                    <form method="POST" action="{{ route('my-orders.testimony.update', $detail->id) }}" class="mt-2">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="button" onclick="document.getElementById('form-{{ $detail->id }}').classList.toggle('hidden')"
+                                                            class="text-pink-500 text-sm">Update Testimony</button>
+                                                    </form>
+                                                </div>
+                                            @else
+                                                <button type="button" onclick="document.getElementById('form-{{ $detail->id }}').classList.toggle('hidden')"
+                                                    class="mt-2 bg-pink-500 text-white px-3 py-1 rounded text-sm">
+                                                    Add Testimony
+                                                </button>
+                                            @endif
+
+                                            {{-- Hidden form --}}
+                                            <form id="form-{{ $detail->id }}" method="POST"
+                                                action="{{ $detail->testimony ? route('my-orders.testimony.update', $detail->id) : route('my-orders.testimony.store', $detail->id) }}"
+                                                class="hidden mt-3 border p-3 rounded bg-gray-50">
+                                                @csrf
+                                                @if($detail->testimony)
+                                                    @method('PUT')
+                                                @endif
+
+                                                {{-- Star rating --}}
+                                                <div class="flex items-center space-x-1 mb-2">
+                                                    @for($i=1; $i<=5; $i++)
+                                                        <label>
+                                                            <input required type="radio" name="rating" value="{{ $i }}" class="hidden"
+                                                                {{ $detail->testimony && $detail->testimony->rating == $i ? 'checked' : '' }}
+                                                                onchange="updateStars({{ $detail->id }}, {{ $i }})">
+                                                            <svg id="star-{{ $detail->id }}-{{ $i }}" class="w-6 h-6 cursor-pointer {{ $detail->testimony && $i <= $detail->testimony->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.17 3.6a1 1 0 00.95.69h3.8c.969 0 1.371 1.24.588 1.81l-3.076 2.236a1 1 0 00-.364 1.118l1.17 3.6c.3.921-.755 1.688-1.54 1.118l-3.076-2.236a1 1 0 00-1.176 0l-3.076 2.236c-.784.57-1.838-.197-1.539-1.118l1.17-3.6a1 1 0 00-.364-1.118L2.54 9.027c-.783-.57-.38-1.81.588-1.81h3.8a1 1 0 00.95-.69l1.17-3.6z"/>
+                                                            </svg>
+                                                        </label>
+                                                    @endfor
+                                                </div>
+
+                                                <textarea required name="comment" rows="3" class="w-full border rounded p-2 text-sm" placeholder="Write your testimony...">{{ $detail->testimony->comment ?? '' }}</textarea>
+
+                                                <button type="submit" class="mt-2 bg-green-500 text-white px-4 py-1 rounded text-sm">
+                                                    {{ $detail->testimony ? 'Update Testimony' : 'Add Testimony' }}
+                                                </button>
+                                                <button type="button" onclick="document.getElementById('form-{{ $detail->id }}').classList.toggle('hidden')"
+                                                    class="mt-2 bg-pink-500 text-white px-3 py-1 rounded text-sm">
+                                                    Cancel
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -97,4 +162,19 @@
             </div>
         @endif
     </div>
+
+    <script>
+        function updateStars(detailId, rating) {
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById(`star-${detailId}-${i}`);
+                if (i <= rating) {
+                    star.classList.remove('text-gray-300');
+                    star.classList.add('text-yellow-400');
+                } else {
+                    star.classList.remove('text-yellow-400');
+                    star.classList.add('text-gray-300');
+                }
+            }
+        }
+    </script>
 </x-app-layout>

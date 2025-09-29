@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Http\Controllers\Controller;
+use App\Models\Testimony;
+use App\Models\OrderDetail;
 
 class MyOrderController extends Controller
 {
@@ -84,4 +86,43 @@ class MyOrderController extends Controller
         return back()->with('success', 'Order berhasil ditandai sebagai completed.');
     }
 
+    public function storeTestimony(Request $request, OrderDetail $orderDetail)
+    {
+        // dd($orderDetail->order->user_id);
+        if ($orderDetail->order->user_id !== $request->user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        Testimony::create([
+            'order_detail_id' => $orderDetail->id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+        ]);
+
+        return back()->with('success', 'Testimony added successfully!');
+    }
+
+    public function updateTestimony(Request $request, OrderDetail $orderDetail)
+    {
+        if ($orderDetail->order->user_id !== $request->user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        $testimony = $orderDetail->testimony; // relasi 1:1
+        if ($testimony) {
+            $testimony->update($validated);
+        }
+
+        return back()->with('success', 'Testimony updated successfully!');
+    }
 }
