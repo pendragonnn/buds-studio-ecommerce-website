@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function confirmPayment(Order $order)
     {
         DB::transaction(function () use ($order) {
-            $order->update(['status' => 'completed']);
+            $order->update(['status' => 'shipped']);
             if ($order->payment) {
                 $order->payment->update(['status' => 'paid']);
             }

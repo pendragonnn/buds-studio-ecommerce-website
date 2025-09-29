@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Customer\MyOrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckRole;
@@ -21,6 +22,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// My Orders (Customer)
+Route::middleware('auth')->group(function () {
+    Route::get('/my-orders', [MyOrderController::class, 'index'])->name('my-orders.index');
+    Route::post('/my-orders/{order}/cancel', [MyOrderController::class, 'cancel'])->name('my-orders.cancel');
+    Route::post('/my-orders/{order}/complete', [MyOrderController::class, 'complete'])->name('my-orders.complete');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
