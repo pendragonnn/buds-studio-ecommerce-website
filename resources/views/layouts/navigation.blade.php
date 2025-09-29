@@ -45,16 +45,16 @@
             {{-- Center menu (desktop) --}}
             @if(auth()->guest() || auth()->user()->role->name === 'customer')
                 <div class="hidden sm:flex sm:items-center sm:space-x-8">
-                    <x-nav-link href="#hero">
+                    <x-nav-link href="{{ request()->routeIs('home') ? '#hero' : route('home') . '#hero' }}">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link href="#products">
+                    <x-nav-link href="{{ request()->routeIs('home') ? '#products' : route('home') . '#products' }}">
                         {{ __('Products') }}
                     </x-nav-link>
-                    <x-nav-link href="#custom-order">
+                    <x-nav-link href="{{ request()->routeIs('home') ? '#custom-order' : route('home') . '#custom-order' }}">
                         {{ __('Custom Order') }}
                     </x-nav-link>
-                    <x-nav-link href="#contact">
+                    <x-nav-link href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}">
                         {{ __('Contact') }}
                     </x-nav-link>
 
@@ -63,6 +63,13 @@
                         @if(auth()->user()->role->name === 'admin')
                             <x-nav-link :href="route('admin.dashboard')">
                                 {{ __('Dashboard') }}
+                            </x-nav-link>
+                        @endif
+
+                        {{-- Only Customer: My Orders link --}}
+                        @if(auth()->user()->role->name === 'customer')
+                            <x-nav-link :href="route('my-orders.index')">
+                                {{ __('My Orders') }}
                             </x-nav-link>
                         @endif
                     @endauth
@@ -149,22 +156,35 @@
 
         @if(auth()->guest() || auth()->user()->role->name === 'customer')
             <div class="space-y-1">
-                <a href="#hero" @click="open = false"
+                <a href="{{ request()->routeIs('home') ? '#hero' : route('home') . '#hero' }}" @click="open = false"
                     class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
                     Home
                 </a>
-                <a href="#products" @click="open = false"
+
+                <a href="{{ request()->routeIs('home') ? '#products' : route('home') . '#products' }}" @click="open = false"
                     class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
                     Products
                 </a>
-                <a href="#custom-order" @click="open = false"
+
+                <a href="{{ request()->routeIs('home') ? '#custom-order' : route('home') . '#custom-order' }}"
+                    @click="open = false"
                     class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
                     Custom Order
                 </a>
-                <a href="#contact" @click="open = false"
+
+                <a href="{{ request()->routeIs('home') ? '#contact' : route('home') . '#contact' }}" @click="open = false"
                     class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
                     Contact
                 </a>
+
+
+                {{-- Only Customer: My Orders link --}}
+                @if(auth()->user()->role->name === 'customer')
+                    <a href="{{ route('my-orders.index') }}" @click="open = false"
+                        class="block px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
+                        My Orders
+                    </a>
+                @endif
 
                 {{-- Customer: Cart --}}
                 @auth
