@@ -40,7 +40,8 @@
                 open: false,
                 step: 1,
                 data: {
-                    name: '', phone: '', address: '',
+                    name: @json(auth()->user()->name ?? ''),
+                    phone: @json(auth()->user()->phone ?? ''), address: '',
                     province: '', province_name: '',
                     city: '', city_name: '',
                     district: '', district_name: '',
@@ -78,6 +79,19 @@
                         case 'e_wallet': return 'E-Wallet (GoPay, OVO, DANA)';
                         default: return '-';
                     }
+                },
+                validateAddress() {
+                    const d = this.data;
+                    if (!d.address || !d.province || !d.city || !d.district || !d.subdistrict) {
+                        return false;
+                    }
+                    return true;
+                },
+                validatePaylentMethod() {
+                    if (!this.paymentMethod) {
+                        return false;
+                    }
+                    return true;
                 }
             })
         })

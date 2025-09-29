@@ -4,7 +4,13 @@
   <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl p-6 relative">
     {{-- Close Button --}}
     <button @click="$store.checkout.open = false; $store.checkout.step = 1; const form = document.getElementById('checkout-form');
-        if (form) form.reset();" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        if (form) 
+        $store.checkout.data.address = '';
+        $store.checkout.data.province = '';
+        $store.checkout.data.city = '';
+        $store.checkout.data.district = '';
+        $store.checkout.data.subdistrict = '';
+        $store.checkout.data.postal_code = '';" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
       ✕
     </button>
 
@@ -13,15 +19,16 @@
       <h2 class="text-xl font-bold text-center mb-4">Enter Your Delivery Address</h2>
       <form id="checkout-form" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" placeholder="Nama" x-model="$store.checkout.data.name"
-            class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
-          <input type="text" placeholder="Nomor Telepon" x-model="$store.checkout.data.phone"
-            class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
+          <input type="text" placeholder="Nama" x-model="$store.checkout.data.name" readonly
+            class="w-full border rounded-lg px-4 py-2 bg-gray-100 text-gray-600 cursor-not-allowed">
+
+          <input type="text" placeholder="Nomor Telepon" x-model="$store.checkout.data.phone" readonly
+            class="w-full border rounded-lg px-4 py-2 bg-gray-100 text-gray-600 cursor-not-allowed">
         </div>
-        <input type="text" placeholder="Alamat Lengkap" x-model="$store.checkout.data.address"
+        <input required type="text" placeholder="Alamat Lengkap" x-model="$store.checkout.data.address"
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
 
-        <select x-model="$store.checkout.data.province" @change="
+        <select required x-model="$store.checkout.data.province" @change="
           const prov = $store.checkout.provinces.find(p => p.id == $event.target.value);
           $store.checkout.data.province_name = prov ? prov.name : '';
           $store.checkout.fetchCities($event.target.value)
@@ -32,7 +39,7 @@
           </template>
         </select>
 
-        <select x-model="$store.checkout.data.city" @change="
+        <select required x-model="$store.checkout.data.city" @change="
           const city = $store.checkout.cities.find(c => c.id == $event.target.value);
           $store.checkout.data.city_name = city ? city.name : '';
           $store.checkout.fetchDistricts($event.target.value)
@@ -43,7 +50,7 @@
           </template>
         </select>
 
-        <select x-model="$store.checkout.data.district" @change="
+        <select required x-model="$store.checkout.data.district" @change="
           const dist = $store.checkout.districts.find(d => d.id == $event.target.value);
           $store.checkout.data.district_name = dist ? dist.name : '';
           $store.checkout.fetchSubdistricts($event.target.value)
@@ -54,7 +61,7 @@
           </template>
         </select>
 
-        <select x-model="$store.checkout.data.subdistrict" @change="
+        <select required x-model="$store.checkout.data.subdistrict" @change="
           const sub = $store.checkout.subdistricts.find(s => s.id == $event.target.value);
           $store.checkout.data.subdistrict_name = sub ? sub.name : '';
         " class="w-full border rounded-lg px-4 py-2">
@@ -68,8 +75,13 @@
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
 
         <div class="flex justify-end">
-          <button type="button" @click="$store.checkout.step = 2"
-            class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
+          <button type="button" @click="
+    if ($store.checkout.validateAddress()) {
+      $store.checkout.step = 2;
+    } else {
+      alert('Lengkapi alamat pengiriman dulu sebelum lanjut.');
+    }
+  " class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
             Next
           </button>
         </div>
@@ -111,7 +123,7 @@
 
       {{-- Payment Methods --}}
       <h3 class="text-lg font-semibold mb-2 text-center">Payment Methods</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <button type="button" @click="$store.checkout.paymentMethod = 'bank_transfer'"
           :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'bank_transfer'}"
           class="border rounded-lg p-4 text-center hover:bg-gray-100">
@@ -125,29 +137,19 @@
           <p class="font-bold">E-Wallet</p>
           <p class="text-sm text-gray-500">GoPay, OVO, DANA</p>
         </button>
-
-        <button type="button" @click="$store.checkout.paymentMethod = 'cod'"
-          :class="{'border-pink-500 bg-pink-100': $store.checkout.paymentMethod === 'cod'}"
-          class="border rounded-lg p-4 text-center hover:bg-gray-100">
-          <p class="font-bold">Cash on Delivery</p>
-          <p class="text-sm text-gray-500">Pay when received</p>
-        </button>
       </div>
 
       {{-- Confirm Button --}}
       <div class="flex justify-end mt-6">
         <div class="flex justify-end mt-6">
-          <button type="button" @click="$store.checkout.step = 3;
-            if ($store.checkout.paymentMethod) {
+          <button type="button" @click="
+            if ($store.checkout.paymentMethod ) {
+              $store.checkout.step = 3;
               $dispatch('place-order');
             } else {
               alert('Choose a payment method');
             }
-            document.getElementById('cart-items').innerHTML = '';
-            document.getElementById('cart-total').innerText = 'Rp 0';
-            document.getElementById('cart-count').innerText = '0';
-            document.getElementById('cart-count-mobile').innerText = '0';"
-            class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
+            " class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600">
             Confirm Order
           </button>
         </div>
@@ -165,15 +167,17 @@
         <p x-text="$store.checkout.data.phone"></p>
         <p x-text="$store.checkout.data.address"></p>
         <p>
-          <span x-text="$store.checkout.data.city"></span>,
-          <span x-text="$store.checkout.data.province"></span>,
+          <span x-text="$store.checkout.data.subdistrict_name"></span>,
+          <span x-text="$store.checkout.data.district_name"></span>,
+          <span x-text="$store.checkout.data.city_name"></span>,
+          <span x-text="$store.checkout.data.province_name"></span>,
           <span x-text="$store.checkout.data.postal_code"></span>
         </p>
       </div>
 
       {{-- Order Summary --}}
       <div class="border rounded-lg p-4 mb-4">
-        <template x-for="item in JSON.parse(localStorage.getItem('cart') || '[]')" :key="item.id">
+        <template x-for="item in JSON.parse(localStorage.getItem('buds_cart') || '[]')" :key="item.id">
           <div class="flex justify-between border-b py-2">
             <span x-text="item.name"></span>
             <span x-text="'Rp ' + (item.price * item.quantity).toLocaleString()"></span>
@@ -212,6 +216,23 @@
     const checkout = window.Alpine.store('checkout').data;
     const paymentMethod = window.Alpine.store('checkout').paymentMethod;
     const cart = JSON.parse(localStorage.getItem('buds_cart') || '[]');
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const totalEl = document.getElementById('checkout-total');
+    if (totalEl) totalEl.innerText = 'Rp ' + total.toLocaleString();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // pas modal dibuka, update total
+      document.addEventListener("alpine:init", () => {
+        Alpine.effect(() => {
+          if (Alpine.store('checkout').open) {
+            updateCheckoutTotal();
+          }
+        });
+      });
+
+      // juga update tiap kali cart berubah
+      window.addEventListener("storage", updateCheckoutTotal);
+    });
 
     if (!cart.length) {
       alert('Your cart is empty');
