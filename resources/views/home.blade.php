@@ -12,7 +12,7 @@
     <x-home.custom-order />
 
     <!-- Customer Review Section -->
-    <x-home.customer-review />
+    <x-home.customer-review :testimonies="$testimonies" />
 
     {{-- Contact Section --}}
     <x-home.contact />

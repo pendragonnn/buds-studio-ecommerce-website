@@ -27,5 +27,10 @@ class Product extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function testimonies()
+    {
+        return $this->hasManyThrough(Testimony::class, OrderDetail::class);
+    }
 }
 

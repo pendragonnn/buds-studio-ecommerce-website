@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Testimony;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -17,11 +18,11 @@ class HomeController extends Controller
         $additionalData = [
             'Press-On Nails' => [
                 'description' => 'Beautiful, salon-quality press-on nails in various designs and colors. Easy to apply, long-lasting results.',
-                'image_url' => 'https://i.pinimg.com/736x/86/67/f1/8667f155a505e0e15d08f7e0d9f63d27.jpg' 
+                'image_url' => 'https://i.pinimg.com/736x/86/67/f1/8667f155a505e0e15d08f7e0d9f63d27.jpg'
             ],
             'Phone Straps' => [
                 'description' => 'Trendy and functional phone straps to keep your device secure while adding a touch of personal style.',
-                'image_url' => 'https://i.pinimg.com/736x/13/85/c5/1385c585671d78735b3430e971c243f2.jpg' 
+                'image_url' => 'https://i.pinimg.com/736x/13/85/c5/1385c585671d78735b3430e971c243f2.jpg'
             ],
         ];
 
@@ -34,8 +35,27 @@ class HomeController extends Controller
             }
         }
 
-        // dd( $categories);
-        $products = Product::with('category')->take(6)->get(); 
-        return view('home', compact('products', 'categories'));
+        $testimonies = Testimony::with(['orderDetail.order.user'])
+            ->orderByDesc('rating')
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+        $products = Product::with('category')
+            ->withAvg('testimonies as avg_rating', 'rating')
+            ->withSum([
+                'orderDetails as total_sold' => function ($query) {
+                    $query->whereHas('order', function ($q) {
+                        $q->where('status', 'completed'); // hanya hitung yang completed
+                    });
+                }
+            ], 'quantity')
+            ->take(6)
+            ->get();
+
+
+        // dd( $testimonies);
+        // $products = Product::with('category')->take(6)->get();
+        return view('home', compact('products', 'categories', 'testimonies'));
     }
 }
