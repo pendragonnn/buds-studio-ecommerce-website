@@ -1,6 +1,14 @@
 <x-app-layout>
     {{-- resources/views/admin/dashboard.blade.php --}}
-    <div class="min-h-screen bg-gray-100" x-data="{ tab: 'products' }">
+    <div class="min-h-screen bg-gray-100" x-data="{ 
+        tab: new URLSearchParams(window.location.search).get('tab') || 'products',
+        setTab(newTab) {
+            this.tab = newTab;
+            const url = new URL(window.location.href);
+            url.searchParams.set('tab', newTab);
+            window.history.pushState({}, '', url);
+        }
+     }">
         {{-- Main --}}
         <main class="max-w-6xl mx-auto px-6 py-8">
             {{-- Panel Header --}}
@@ -10,26 +18,30 @@
 
                 {{-- Tabs --}}
                 <div class="flex gap-3 mt-4">
-                    <button @click="tab = 'products'"
+                    <button @click="setTab('products')"
                         :class="tab === 'products' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium">
                         Products
                     </button>
-                    <button @click="tab = 'orders'"
+
+                    <button @click="setTab('orders')"
                         :class="tab === 'orders' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium">
                         Orders
                     </button>
-                    <button @click="tab = 'users'"
+
+                    <button @click="setTab('users')"
                         :class="tab === 'users' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium">
                         Users
                     </button>
-                    <button @click="tab = 'ratings'"
+
+                    <button @click="setTab('ratings')"
                         :class="tab === 'ratings' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium">
                         Ratings
                     </button>
+
                 </div>
             </div>
 
