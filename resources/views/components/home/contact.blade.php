@@ -43,8 +43,8 @@
                 <h3 class="text-xl font-bold text-gray-800 mb-2">WhatsApp</h3>
                 <p class="text-gray-600 text-sm mb-3">Get instant response for custom orders and
                   inquiries</p>
-                <p class="text-lg font-semibold text-gray-800 mb-4">+62 812-3456-7890</p>
-                <a href="https://wa.me/6281234567890?text=Hi%20Buds%20Studio!%20I%20have%20a%20question%20about%20your%20products."
+                <p class="text-lg font-semibold text-gray-800 mb-4">+62 818-0974-0724</p>
+                <a href="https://wa.me/6281809740724?text=Hi%20Buds%20Studio!%20I%20have%20a%20question%20about%20your%20products."
                   target="_blank"
                   class="inline-flex items-center px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors">
                   <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -107,7 +107,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Instagram -->
-            <a href="https://instagram.com/buds.studio" target="_blank"
+            <a href="https://instagram.com/buds.studioo" target="_blank"
               class="group flex items-center p-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               <div
                 class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 group-hover:bg-opacity-30 transition-all">
@@ -118,12 +118,12 @@
               </div>
               <div>
                 <div class="font-semibold">Instagram</div>
-                <div class="text-sm opacity-90">@buds.studio</div>
+                <div class="text-sm opacity-90">@buds.studioo</div>
               </div>
             </a>
 
             <!-- Shopee -->
-            <a href="https://shopee.co.id/buds.studio" target="_blank"
+            <a href="https://shopee.co.id/buds_studiozz" target="_blank"
               class="group flex items-center p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               <div
                 class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 group-hover:bg-opacity-30 transition-all">
@@ -140,11 +140,11 @@
                   <svg>
                     <path class="text-white" fill="currentColor"
                       d="M74.98,91.98C76.15,82.36,69.96,76.22,53.6,71c-7.92-2.7-11.66-6.24-11.57-11.12 c0.33-5.4,5.36-9.34,12.04-9.47c4.63,0.09,9.77,1.22,14.76,4.56c0.59,0.37,1.01,0.32,1.35-0.2c0.46-0.74,1.61-2.53,2-3.17 c0.26-0.42,0.31-0.96-0.35-1.44c-0.95-0.7-3.6-2.13-5.03-2.72c-3.88-1.62-8.23-2.64-12.86-2.63c-9.77,0.04-17.47,6.22-18.12,14.47 c-0.42,5.95,2.53,10.79,8.86,14.47c1.34,0.78,8.6,3.67,11.49,4.57c9.08,2.83,13.8,7.9,12.69,13.81c-1.01,5.36-6.65,8.83-14.43,8.93 c-6.17-0.24-11.71-2.75-16.02-6.1c-0.11-0.08-0.65-0.5-0.72-0.56c-0.53-0.42-1.11-0.39-1.47,0.15c-0.26,0.4-1.92,2.8-2.34,3.43 c-0.39,0.55-0.18,0.86,0.23,1.2c1.8,1.5,4.18,3.14,5.81,3.97c4.47,2.28,9.32,3.53,14.48,3.72c3.32,0.22,7.5-0.49,10.63-1.81 C70.63,102.67,74.25,97.92,74.98,91.98L74.98,91.98z M54.79,7.18c-10.59,0-19.22,9.98-19.62,22.47h39.25 C74.01,17.16,65.38,7.18,54.79,7.18L54.79,7.18z M94.99,122.88l-0.41,0l-80.82-0.01h0c-5.5-0.21-9.54-4.66-10.09-10.19l-0.05-1 l-3.61-79.5v0C0,32.12,0,32.06,0,32c0-1.28,1.03-2.33,2.3-2.35l0,0h25.48C28.41,13.15,40.26,0,54.79,0s26.39,13.15,27.01,29.65 h25.4h0.04c1.3,0,2.35,1.05,2.35,2.35c0,0.04,0,0.08,0,0.12v0l-3.96,79.81l-0.04,0.68C105.12,118.21,100.59,122.73,94.99,122.88 L94.99,122.88z" />
-                </svg>
+                  </svg>
               </div>
               <div>
                 <div class="font-semibold">Shopee</div>
-                <div class="text-sm opacity-90">buds.studio</div>
+                <div class="text-sm opacity-90">Buds Studio</div>
               </div>
             </a>
           </div>
@@ -181,7 +181,7 @@
       </div>
 
       <!-- Right Side - Contact Form -->
-      <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl border border-pink-100">
+      <div class="bg-white h-fit rounded-3xl p-8 lg:p-10 shadow-2xl border border-pink-100">
         <div class="mb-8">
           <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Send us a Message</h3>
           <p class="text-gray-600">Have a specific question? Fill out the form below and we'll get
@@ -265,11 +265,11 @@
             :class="submitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 transform hover:scale-105'"
             class="w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center">
             <span x-show="!submitting" class="flex items-center justify-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              Send Message
+              <svg class="w-5 h-5 ml-2 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
               </svg>
-              Send Message
             </span>
             <span x-show="submitting" class="flex items-center">
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -315,26 +315,28 @@
       submitForm() {
         this.submitting = true;
 
-        // Simulate form submission (replace with actual form handling)
-        setTimeout(() => {
-          this.submitting = false;
-          this.showSuccess = true;
+        // Format email body
+        let body = `
+Hello Buds Studio! 👋
 
-          // Reset form
-          this.form = {
-            name: '',
-            email: '',
-            phone: '',
-            subject: '',
-            message: '',
-            privacy: false
-          };
+You have a new inquiry:
 
-          // Hide success message after 5 seconds
-          setTimeout(() => {
-            this.showSuccess = false;
-          }, 5000);
-        }, 2000);
+👤 Name: ${this.form.name}
+📧 Email: ${this.form.email}
+📱 Phone: ${this.form.phone}
+📌 Subject: ${this.form.subject}
+
+💬 Message:
+${this.form.message}
+        `;
+
+        // Encode biar aman di URL
+        let mailtoLink = `mailto:buds.studio@gmail.com?subject=${encodeURIComponent(this.form.subject)}&body=${encodeURIComponent(body)}`;
+
+        // Redirect ke mailto link
+        window.location.href = mailtoLink;
+
+        this.submitting = false;
       }
     }
   }

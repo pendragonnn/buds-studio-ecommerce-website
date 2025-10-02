@@ -6,7 +6,7 @@
       <div>
         <a href="{{ route('home') }}" class="flex items-center space-x-2">
           <x-application-logo class="h-10 w-auto text-pink-500" />
-          <span class="text-xl font-bold text-pink-200">Buds Studio</span>
+          <span class="text-xl font-bold text-pink-200 italic">Buds Studio</span>
         </a>
         <p class="mt-4 text-gray-200 text-sm leading-relaxed">
           Express yourself with our unique press-on nails and phone straps 🌸
@@ -28,7 +28,7 @@
       <div>
         <h3 class="text-lg font-semibold text-pink-200 mb-4">Get in Touch</h3>
         <p class="text-sm text-gray-400">📧 buds.studio@gmail.com</p>
-        <p class="text-sm text-gray-400">📱 +62 812-3456-7890</p>
+        <p class="text-sm text-gray-400">📱 +62 818-0974-0724</p>
         <div class="flex space-x-4 mt-4">
           <a href="#" class="text-pink-500 hover:text-pink-700">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
