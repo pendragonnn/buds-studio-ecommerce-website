@@ -1,19 +1,28 @@
 {{-- Categories Section --}}
-<section class="px-4 py-8 md:py-8 md:px-12 bg-white">
-  <div class="container mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Our Categories</h2>
+<section class="py-20 px-6 md:px-12 bg-white">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-14">
+      Our Categories
+    </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
       @foreach($categories as $category)
-        <div class="bg-white shadow-md rounded-3xl overflow-hidden hover:shadow-lg transition">
-          <img src="{{ $category->image_url ?? 'images/default-product.jpg' }}" alt="{{ $category->name }}"
-            class="w-full h-52 md:h-60 lg:h-80 object-cover">
-          <div class="p-8 flex flex-col justify-center items-center gap-5">
-            <h3 class="text-xl font-semibold text-gray-700">{{ $category->name }}</h3>
-            <p class="text-gray-500 text-center">{{ $category->description }}</p>
+        <div
+          class="bg-white rounded-[15px] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.1)] transition-transform duration-300 hover:-translate-y-2">
+          
+          {{-- Category image / gradient --}}
+          <div class="h-52 md:h-60 lg:h-72 bg-cover bg-center"
+               style="background-image: url('{{ asset($category->image_url ?? 'images/default-product.jpg') }}')">
+          </div>
+
+          {{-- Content --}}
+          <div class="p-8 text-center flex flex-col items-center gap-5">
+            <h3 class="text-2xl font-semibold text-gray-800">{{ $category->name }}</h3>
+            <p class="text-gray-600">{{ $category->description }}</p>
             <a href="#products"
-              class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-lg shadow-md transition">View
-              Collection</a>
+               class="inline-block bg-[#ffcfdf] text-white font-bold px-8 py-3 rounded-full transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:bg-[#e55a87] hover:shadow-[0_5px_15px_rgba(255,107,157,0.4)]">
+              View Collection
+            </a>
           </div>
         </div>
       @endforeach
