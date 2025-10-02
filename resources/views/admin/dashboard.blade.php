@@ -12,37 +12,39 @@
         {{-- Main --}}
         <main class="max-w-6xl mx-auto px-6 py-8">
             {{-- Panel Header --}}
-            <div class="bg-white shadow rounded-xl p-6 mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Admin Dashboard</h2>
+            <div class="bg-white shadow-lg rounded-xl p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Buds Studio - Admin Panel</h2>
                 <p class="text-gray-500">Manage your products and orders</p>
+            </div>
 
-                {{-- Tabs --}}
-                <div class="flex gap-3 mt-4">
-                    <button @click="setTab('products')"
-                        :class="tab === 'products' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-lg font-medium">
-                        Products
-                    </button>
+            <div class="flex gap-2 my-4">
+                <button @click="setTab('products')" :class="tab === 'products' 
+            ? 'bg-[#BE3455] text-white shadow-sm' 
+            : 'bg-white text-gray-600 border border-gray-300'"
+                    class="px-5 py-2.5 rounded-full font-medium text-sm transition">
+                    Products
+                </button>
 
-                    <button @click="setTab('orders')"
-                        :class="tab === 'orders' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-lg font-medium">
-                        Orders
-                    </button>
+                <button @click="setTab('orders')" :class="tab === 'orders' 
+            ? 'bg-[#BE3455] text-white shadow-sm' 
+            : 'bg-white text-gray-600 border border-gray-300'"
+                    class="px-5 py-2.5 rounded-full font-medium text-sm transition">
+                    Orders
+                </button>
 
-                    <button @click="setTab('users')"
-                        :class="tab === 'users' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-lg font-medium">
-                        Users
-                    </button>
+                <button @click="setTab('users')" :class="tab === 'users' 
+            ? 'bg-[#BE3455] text-white shadow-sm' 
+            : 'bg-white text-gray-600 border border-gray-300'"
+                    class="px-5 py-2.5 rounded-full font-medium text-sm transition">
+                    Users
+                </button>
 
-                    <button @click="setTab('ratings')"
-                        :class="tab === 'ratings' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-lg font-medium">
-                        Ratings
-                    </button>
-
-                </div>
+                <button @click="setTab('ratings')" :class="tab === 'ratings' 
+            ? 'bg-[#BE3455] text-white shadow-sm' 
+            : 'bg-white text-gray-600 border border-gray-300'"
+                    class="px-5 py-2.5 rounded-full font-medium text-sm transition">
+                    Ratings
+                </button>
             </div>
 
             {{-- Content --}}

@@ -4,22 +4,62 @@
   <h3 class="text-lg font-semibold mb-6">Orders Management</h3>
 
   {{-- Summary Cards --}}
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <div class="bg-gray-100 p-4 rounded-lg text-center">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+    {{-- Total Orders --}}
+    <div
+      class="bg-gradient-to-br from-pink-100 to-pink-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition text-center">
+      <div class="flex justify-center mb-3">
+        <div class="bg-pink-500 text-white p-3 rounded-full shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
+          </svg>
+        </div>
+      </div>
       <p class="text-gray-600 font-medium">Total Orders</p>
-      <p class="text-2xl font-bold text-gray-800">{{ $totalOrders }}</p>
+      <p class="text-3xl font-bold text-gray-800">{{ $totalOrders }}</p>
     </div>
-    <div class="bg-gray-100 p-4 rounded-lg text-center">
+
+    {{-- Pending Orders --}}
+    <div
+      class="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition text-center">
+      <div class="flex justify-center mb-3">
+        <div class="bg-yellow-500 text-white p-3 rounded-full shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
       <p class="text-gray-600 font-medium">Pending Orders</p>
-      <p class="text-2xl font-bold text-gray-800">{{ $pendingOrders }}</p>
+      <p class="text-3xl font-bold text-gray-800">{{ $pendingOrders }}</p>
     </div>
-    <div class="bg-gray-100 p-4 rounded-lg text-center">
+
+    {{-- Completed Orders --}}
+    <div
+      class="bg-gradient-to-br from-green-100 to-green-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition text-center">
+      <div class="flex justify-center mb-3">
+        <div class="bg-green-500 text-white p-3 rounded-full shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
       <p class="text-gray-600 font-medium">Completed Orders</p>
-      <p class="text-2xl font-bold text-gray-800">{{ $completedOrders }}</p>
+      <p class="text-3xl font-bold text-gray-800">{{ $completedOrders }}</p>
     </div>
-    <div class="bg-gray-100 p-4 rounded-lg text-center">
+
+    {{-- Total Revenue --}}
+    <div
+      class="bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl p-6 shadow-md hover:shadow-xl transition text-center">
+      <div class="flex justify-center mb-3">
+        <div class="bg-purple-500 text-white p-3 rounded-full shadow-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 8c-1.657 0-3 .843-3 1.875v6.25C9 17.157 10.343 18 12 18s3-.843 3-1.875v-6.25C15 8.843 13.657 8 12 8z" />
+          </svg>
+        </div>
+      </div>
       <p class="text-gray-600 font-medium">Total Revenue</p>
-      <p class="text-2xl font-bold text-gray-800">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+      <p class="text-3xl font-bold text-gray-800">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
     </div>
   </div>
 
@@ -46,15 +86,15 @@
             </td>
             <td class="px-4 py-3 text-center">
               <span class="px-3 py-1 rounded-full text-xs font-semibold
-                  @if($o->status == 'completed') bg-green-100 text-green-700
-                  @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
-                  @elseif($o->status == 'cancelled') bg-red-100 text-red-700
-                  @else bg-blue-100 text-blue-700 @endif">
+                    @if($o->status == 'completed') bg-green-100 text-green-700
+                    @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
+                    @elseif($o->status == 'cancelled') bg-red-100 text-red-700
+                    @else bg-blue-100 text-blue-700 @endif">
                 {{ ucfirst($o->status) }}
               </span>
             </td>
             <td class="px-4 py-3 text-center">{{ $o->created_at->format('Y-m-d') }}</td>
-            <td class="px-4 py-3 flex flex-wrap gap-2 justify-center">
+            <td class="px-4 py-3 flex gap-2 justify-center">
               {{-- View --}}
               <button @click="openView = true; order = {{ $o->load('orderDetails.product')->toJson() }}"
                 class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
@@ -164,5 +204,3 @@
     });
   });
 </script>
-
-
