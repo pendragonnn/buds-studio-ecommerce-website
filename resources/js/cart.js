@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (cartContainer) {
         cartContainer.innerHTML += `
-          <div class="flex items-center gap-4 border-b pb-4 mb-4">
+          <div class="flex items-center gap-4 pb-4 mb-4">
             <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
             <div class="flex-1">
               <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
