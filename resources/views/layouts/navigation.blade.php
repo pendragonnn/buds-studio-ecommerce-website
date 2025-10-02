@@ -15,16 +15,16 @@
          document.querySelectorAll('section[id]').forEach(section => {
              observer.observe(section);
          });
-     " class="bg-white border-b border-gray-100 shadow sticky top-0 w-full z-50">
+     " class="bg-[linear-gradient(135deg,#ffddec,#daddff)] border-b border-gray-100 shadow sticky top-0 w-full z-50">
 
     {{-- Kode untuk mobile hamburger menu --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             {{-- Logo --}}
             <div class="shrink-0 flex items-center">
-                <a href="{{ route('home') }}" class="flex items-center space-x-1">
+                <a href="{{ route('home') }}" class="flex items-center space-x-4">
                     <x-application-logo class="block h-12 w-auto fill-current text-pink-500" />
-                    <span class="font-bold text-xl text-[#e38593]">Buds Studio</span>
+                    <span class="font-bold text-2xl italic text-gray-600">Buds Studio</span>
                 </a>
             </div>
 
@@ -65,15 +65,6 @@
                                 {{ __('Dashboard') }}
                             </x-nav-link>
                         @endif
-
-                        {{-- Only Customer: My Orders link --}}
-                        @auth
-                            @if(auth()->user()->role->name === 'customer')
-                                <x-nav-link :href="route('my-orders.index')">
-                                    {{ __('My Orders') }}
-                                </x-nav-link>
-                            @endif
-                        @endauth
                     @endauth
                 </div>
             @elseif(auth()->user()->role->name === 'admin')
@@ -89,23 +80,19 @@
                 @guest
                     {{-- Guest: Show login button --}}
                     <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'"
-                        class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-200">
-                        {{ __('Login / Register') }}
+                        class="border border-white bg-white/30 text-white px-4 py-2 rounded-full hover:bg-pink-200 transition duration-200">
+                        {{ __('Login') }}
                     </button>
                 @else
                     {{-- If logged in --}}
                     <div class="flex items-center space-x-4">
                         {{-- Customer: Show cart icon --}}
                         @if(auth()->user()->role->name === 'customer')
-                            <button @click="$store.cart.open = true" class="relative">
-                                <svg class="w-7 h-7 text-gray-700 hover:text-pink-500" fill="none" stroke="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-                                </svg>
+                            <button @click="$store.cart.open = true" class="relative text-md">
+                                🛒
                                 {{-- badge jumlah item --}}
                                 <span id="cart-count"
-                                    class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                                    class="absolute -top-2 -right-2 bg-[#ffd700] text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                                     0
                                 </span>
                             </button>
@@ -133,6 +120,15 @@
                                         {{ __('Admin Dashboard') }}
                                     </x-dropdown-link>
                                 @endif
+
+                                {{-- Only Customer: My Orders link --}}
+                                @auth
+                                    @if(auth()->user()->role->name === 'customer')
+                                        <x-dropdown-link :href="route('my-orders.index')">
+                                            {{ __('My Orders') }}
+                                        </x-dropdown-link>
+                                    @endif
+                                @endauth
 
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -197,7 +193,7 @@
                             class="w-full flex items-center justify-between px-4 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 rounded-lg">
                             <span>Cart</span>
                             <span id="cart-count-mobile"
-                                class="ml-2 bg-pink-500 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
+                                class="ml-2 bg-[#ffd700] text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center">
                                 0
                             </span>
                         </button>

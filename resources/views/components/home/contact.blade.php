@@ -11,19 +11,11 @@
   <div class="relative container mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section Header -->
     <div class="text-center mb-16">
-      <div
-        class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mb-6 shadow-lg">
-        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
-          </path>
-        </svg>
-      </div>
       <h2
-        class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-600 via-rose-500 to-pink-700 bg-clip-text text-transparent mb-4">
+        class="text-3xl font-bold bg-gradient-to-r from-pink-600 via-rose-500 to-pink-700 bg-clip-text text-transparent mb-4">
         Get in Touch
       </h2>
-      <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+      <p class="text-md text-gray-600 max-w-2xl mx-auto leading-relaxed">
         We'd love to hear from you! Whether you have questions, custom requests, or just want to say
         hello
         <span class="text-pink-600 font-semibold">we're here for you</span> 💕
@@ -51,8 +43,8 @@
                 <h3 class="text-xl font-bold text-gray-800 mb-2">WhatsApp</h3>
                 <p class="text-gray-600 text-sm mb-3">Get instant response for custom orders and
                   inquiries</p>
-                <p class="text-lg font-semibold text-gray-800 mb-4">+62 812-3456-7890</p>
-                <a href="https://wa.me/6281234567890?text=Hi%20Buds%20Studio!%20I%20have%20a%20question%20about%20your%20products."
+                <p class="text-lg font-semibold text-gray-800 mb-4">+62 818-0974-0724</p>
+                <a href="https://wa.me/6281809740724?text=Hi%20Buds%20Studio!%20I%20have%20a%20question%20about%20your%20products."
                   target="_blank"
                   class="inline-flex items-center px-4 py-2 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors">
                   <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -115,7 +107,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Instagram -->
-            <a href="https://instagram.com/buds.studio" target="_blank"
+            <a href="https://instagram.com/buds.studioo" target="_blank"
               class="group flex items-center p-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               <div
                 class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 group-hover:bg-opacity-30 transition-all">
@@ -126,25 +118,33 @@
               </div>
               <div>
                 <div class="font-semibold">Instagram</div>
-                <div class="text-sm opacity-90">@buds.studio</div>
+                <div class="text-sm opacity-90">@buds.studioo</div>
               </div>
             </a>
 
             <!-- Shopee -->
-            <a href="https://shopee.co.id/buds.studio" target="_blank"
+            <a href="https://shopee.co.id/buds_studiozz" target="_blank"
               class="group flex items-center p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               <div
                 class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 group-hover:bg-opacity-30 transition-all">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M16.5 21.75h-9c-3.105 0-5.625-2.52-5.625-5.625v-8.25C1.875 4.77 4.395 2.25 7.5 2.25h9c3.105 0 5.625 2.52 5.625 5.625v8.25c0 3.105-2.52 5.625-5.625 5.625zM7.5 3.75C5.223 3.75 3.375 5.598 3.375 7.875v8.25c0 2.277 1.848 4.125 4.125 4.125h9c2.277 0 4.125-1.848 4.125-4.125v-8.25c0-2.277-1.848-4.125-4.125-4.125h-9z" />
-                  <path
-                    d="M12 18c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zm0-10.5c-2.481 0-4.5 2.019-4.5 4.5s2.019 4.5 4.5 4.5 4.5-2.019 4.5-4.5-2.019-4.5-4.5-4.5z" />
-                </svg>
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 109.59 122.88"
+                  style="enable-background:new 0 0 109.59 122.88" xml:space="preserve">
+                  <style type="text/css">
+                    <![CDATA[
+                    .st0 {
+                      fill: #EE4D2D;
+                    }
+                    ]]>
+                  </style>
+                  <svg>
+                    <path class="text-white" fill="currentColor"
+                      d="M74.98,91.98C76.15,82.36,69.96,76.22,53.6,71c-7.92-2.7-11.66-6.24-11.57-11.12 c0.33-5.4,5.36-9.34,12.04-9.47c4.63,0.09,9.77,1.22,14.76,4.56c0.59,0.37,1.01,0.32,1.35-0.2c0.46-0.74,1.61-2.53,2-3.17 c0.26-0.42,0.31-0.96-0.35-1.44c-0.95-0.7-3.6-2.13-5.03-2.72c-3.88-1.62-8.23-2.64-12.86-2.63c-9.77,0.04-17.47,6.22-18.12,14.47 c-0.42,5.95,2.53,10.79,8.86,14.47c1.34,0.78,8.6,3.67,11.49,4.57c9.08,2.83,13.8,7.9,12.69,13.81c-1.01,5.36-6.65,8.83-14.43,8.93 c-6.17-0.24-11.71-2.75-16.02-6.1c-0.11-0.08-0.65-0.5-0.72-0.56c-0.53-0.42-1.11-0.39-1.47,0.15c-0.26,0.4-1.92,2.8-2.34,3.43 c-0.39,0.55-0.18,0.86,0.23,1.2c1.8,1.5,4.18,3.14,5.81,3.97c4.47,2.28,9.32,3.53,14.48,3.72c3.32,0.22,7.5-0.49,10.63-1.81 C70.63,102.67,74.25,97.92,74.98,91.98L74.98,91.98z M54.79,7.18c-10.59,0-19.22,9.98-19.62,22.47h39.25 C74.01,17.16,65.38,7.18,54.79,7.18L54.79,7.18z M94.99,122.88l-0.41,0l-80.82-0.01h0c-5.5-0.21-9.54-4.66-10.09-10.19l-0.05-1 l-3.61-79.5v0C0,32.12,0,32.06,0,32c0-1.28,1.03-2.33,2.3-2.35l0,0h25.48C28.41,13.15,40.26,0,54.79,0s26.39,13.15,27.01,29.65 h25.4h0.04c1.3,0,2.35,1.05,2.35,2.35c0,0.04,0,0.08,0,0.12v0l-3.96,79.81l-0.04,0.68C105.12,118.21,100.59,122.73,94.99,122.88 L94.99,122.88z" />
+                  </svg>
               </div>
               <div>
                 <div class="font-semibold">Shopee</div>
-                <div class="text-sm opacity-90">buds.studio</div>
+                <div class="text-sm opacity-90">Buds Studio</div>
               </div>
             </a>
           </div>
@@ -181,7 +181,7 @@
       </div>
 
       <!-- Right Side - Contact Form -->
-      <div class="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl border border-pink-100">
+      <div class="bg-white h-fit rounded-3xl p-8 lg:p-10 shadow-2xl border border-pink-100">
         <div class="mb-8">
           <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Send us a Message</h3>
           <p class="text-gray-600">Have a specific question? Fill out the form below and we'll get
@@ -265,11 +265,11 @@
             :class="submitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 transform hover:scale-105'"
             class="w-full text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center">
             <span x-show="!submitting" class="flex items-center justify-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              Send Message
+              <svg class="w-5 h-5 ml-2 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
               </svg>
-              Send Message
             </span>
             <span x-show="submitting" class="flex items-center">
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -295,149 +295,6 @@
         </form>
       </div>
     </div>
-
-    <!-- Bottom Section - FAQ or Additional Info -->
-    <div class="mt-20">
-      <div class="bg-white rounded-3xl p-8 shadow-xl border border-pink-100">
-        <h3 class="text-2xl font-bold text-center text-gray-800 mb-8">Frequently Asked Questions</h3>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <div class="space-y-6" x-data="{ openFaq: null }">
-            <!-- FAQ 1 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 1 ? null : 1"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">How long does shipping take?</span>
-                <svg :class="openFaq === 1 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 1" x-transition class="mt-2 text-gray-600">
-                Regular shipping takes 3-5 business days within Indonesia. Express shipping is
-                available for 1-2 days delivery.
-              </div>
-            </div>
-
-            <!-- FAQ 2 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 2 ? null : 2"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">Do you accept custom designs?</span>
-                <svg :class="openFaq === 2 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 2" x-transition class="mt-2 text-gray-600">
-                Yes! We love creating custom designs. Just contact us via WhatsApp with your
-                ideas and we'll discuss the details and pricing.
-              </div>
-            </div>
-
-            <!-- FAQ 3 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 3 ? null : 3"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">What payment methods do you
-                  accept?</span>
-                <svg :class="openFaq === 3 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 3" x-transition class="mt-2 text-gray-600">
-                We accept bank transfers, e-wallets (OVO, GoPay, DANA), and payments through our
-                Shopee store.
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-6" x-data="{ openFaq: null }">
-            <!-- FAQ 4 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 4 ? null : 4"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">How long do press-on nails
-                  last?</span>
-                <svg :class="openFaq === 4 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 4" x-transition class="mt-2 text-gray-600">
-                With proper application and care, our press-on nails can last 1-2 weeks. We
-                include application instructions with every order.
-              </div>
-            </div>
-
-            <!-- FAQ 5 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 5 ? null : 5"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">Can I return or exchange
-                  products?</span>
-                <svg :class="openFaq === 5 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 5" x-transition class="mt-2 text-gray-600">
-                Due to hygiene reasons, we don't accept returns for nail products. However, if
-                there's a quality issue, please contact us within 24 hours of delivery.
-              </div>
-            </div>
-
-            <!-- FAQ 6 -->
-            <div class="border-b border-gray-200 pb-4">
-              <button @click="openFaq = openFaq === 6 ? null : 6"
-                class="w-full text-left flex justify-between items-center py-2">
-                <span class="font-semibold text-gray-800">Do you ship internationally?</span>
-                <svg :class="openFaq === 6 ? 'rotate-180' : ''"
-                  class="w-5 h-5 text-pink-500 transform transition-transform" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div x-show="openFaq === 6" x-transition class="mt-2 text-gray-600">
-                Currently we only ship within Indonesia. International shipping may be available
-                for larger orders - please contact us for details.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Final CTA -->
-    <div class="text-center mt-16">
-      <div
-        class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mb-4">
-        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-          <path
-            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-          </path>
-        </svg>
-      </div>
-      <h3 class="text-2xl font-bold text-gray-800 mb-4">Still have questions?</h3>
-      <p class="text-lg text-gray-600 mb-6">
-        Don't hesitate to reach out! We're here to help make your nail dreams come true ✨
-      </p>
-      <a href="https://wa.me/6281234567890?text=Hi%20Buds%20Studio!%20I%20have%20some%20questions%20about%20your%20products."
-        target="_blank"
-        class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
-          <path
-            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
-        </svg>
-        Chat with Us Now
-      </a>
-    </div>
   </div>
 </section>
 
@@ -458,26 +315,28 @@
       submitForm() {
         this.submitting = true;
 
-        // Simulate form submission (replace with actual form handling)
-        setTimeout(() => {
-          this.submitting = false;
-          this.showSuccess = true;
+        // Format email body
+        let body = `
+Hello Buds Studio! 👋
 
-          // Reset form
-          this.form = {
-            name: '',
-            email: '',
-            phone: '',
-            subject: '',
-            message: '',
-            privacy: false
-          };
+You have a new inquiry:
 
-          // Hide success message after 5 seconds
-          setTimeout(() => {
-            this.showSuccess = false;
-          }, 5000);
-        }, 2000);
+👤 Name: ${this.form.name}
+📧 Email: ${this.form.email}
+📱 Phone: ${this.form.phone}
+📌 Subject: ${this.form.subject}
+
+💬 Message:
+${this.form.message}
+        `;
+
+        // Encode biar aman di URL
+        let mailtoLink = `mailto:buds.studio@gmail.com?subject=${encodeURIComponent(this.form.subject)}&body=${encodeURIComponent(body)}`;
+
+        // Redirect ke mailto link
+        window.location.href = mailtoLink;
+
+        this.submitting = false;
       }
     }
   }

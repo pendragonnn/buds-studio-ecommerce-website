@@ -1,34 +1,34 @@
 <!-- resources/views/components/footer.blade.php -->
-<footer class="bg-pink-50 border-t border-pink-100">
+<footer class="bg-[#333] border-t border-pink-100">
   <div class="max-w-7xl mx-auto px-6 py-12 md:py-16">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
       <!-- Brand / Logo -->
       <div>
         <a href="{{ route('home') }}" class="flex items-center space-x-2">
           <x-application-logo class="h-10 w-auto text-pink-500" />
-          <span class="text-xl font-bold text-pink-600">Buds Studio</span>
+          <span class="text-xl font-bold text-pink-200 italic">Buds Studio</span>
         </a>
-        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+        <p class="mt-4 text-gray-200 text-sm leading-relaxed">
           Express yourself with our unique press-on nails and phone straps 🌸
         </p>
       </div>
 
       <!-- Quick Links -->
       <div class="md:mx-auto">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Quick Links</h3>
+        <h3 class="text-lg font-semibold text-pink-200 mb-4">Quick Links</h3>
         <ul class="space-y-2 text-sm">
-          <li><a href="#hero" class="text-gray-600 hover:text-pink-600 transition">Home</a></li>
-          <li><a href="#products" class="text-gray-600 hover:text-pink-600 transition">Products</a></li>
-          <li><a href="#custom-order" class="text-gray-600 hover:text-pink-600 transition">Custom Order</a></li>
-          <li><a href="#contact" class="text-gray-600 hover:text-pink-600 transition">Contact</a></li>
+          <li><a href="#hero" class="text-gray-400 hover:text-pink-600 transition">Home</a></li>
+          <li><a href="#products" class="text-gray-400 hover:text-pink-600 transition">Products</a></li>
+          <li><a href="#custom-order" class="text-gray-400 hover:text-pink-600 transition">Custom Order</a></li>
+          <li><a href="#contact" class="text-gray-400 hover:text-pink-600 transition">Contact</a></li>
         </ul>
       </div>
 
       <!-- Contact & Social -->
       <div>
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Get in Touch</h3>
-        <p class="text-sm text-gray-600">📧 buds.studio@gmail.com</p>
-        <p class="text-sm text-gray-600">📱 +62 812-3456-7890</p>
+        <h3 class="text-lg font-semibold text-pink-200 mb-4">Get in Touch</h3>
+        <p class="text-sm text-gray-400">📧 buds.studio@gmail.com</p>
+        <p class="text-sm text-gray-400">📱 +62 818-0974-0724</p>
         <div class="flex space-x-4 mt-4">
           <a href="#" class="text-pink-500 hover:text-pink-700">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
