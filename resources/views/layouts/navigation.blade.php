@@ -22,9 +22,9 @@
         <div class="flex justify-between h-20">
             {{-- Logo --}}
             <div class="shrink-0 flex items-center">
-                <a href="{{ route('home') }}" class="flex items-center space-x-1">
+                <a href="{{ route('home') }}" class="flex items-center space-x-4">
                     <x-application-logo class="block h-12 w-auto fill-current text-pink-500" />
-                    <span class="font-bold text-xl text-[#e38593]">Buds Studio</span>
+                    <span class="font-bold text-2xl italic text-gray-600">Buds Studio</span>
                 </a>
             </div>
 
@@ -80,8 +80,8 @@
                 @guest
                     {{-- Guest: Show login button --}}
                     <button @click="$store.authModal.open = true; $store.authModal.tab = 'login'"
-                        class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600 transition duration-200">
-                        {{ __('Login / Register') }}
+                        class="border border-white bg-white/30 text-white px-4 py-2 rounded-full hover:bg-pink-200 transition duration-200">
+                        {{ __('Login') }}
                     </button>
                 @else
                     {{-- If logged in --}}
