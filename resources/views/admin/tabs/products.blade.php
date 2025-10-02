@@ -39,11 +39,12 @@
 
     <div class="col-span-2 flex justify-between">
       {{-- Reset ke mode add --}}
-      <button type="button" @click="mode = 'add'; product = {}" class="bg-gray-300 px-6 py-2 rounded-lg">
+      <button type="button" @click="mode = 'add'; product = {}"
+        class="px-6 py-2 rounded-lg font-medium border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 transition">
         Reset
       </button>
 
-      <button type="submit" class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600"
+      <button type="submit" class="bg-[linear-gradient(135deg,#BE1D58FF,#D76C93FF)] text-white px-6 py-2 rounded-lg font-medium hover:bg-pink-600 transition"
         x-text="mode === 'add' ? 'Add Product' : 'Update Product'">
       </button>
     </div>

@@ -30,11 +30,11 @@
 
     <div class="col-span-2 flex justify-between">
       {{-- Tombol reset ke mode add --}}
-      <button type="button" @click="mode = 'add'; user = {}" class="bg-gray-300 px-6 py-2 rounded-lg">
+      <button type="button" @click="mode = 'add'; user = {}" class="px-6 py-2 rounded-lg font-medium border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 transition">
         Reset
       </button>
 
-      <button type="submit" class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600"
+      <button type="submit" class="bg-[linear-gradient(135deg,#BE1D58FF,#D76C93FF)] text-white px-6 py-2 rounded-lg hover:bg-pink-600"
         x-text="mode === 'add' ? 'Add User' : 'Update User'">
       </button>
     </div>
@@ -59,7 +59,7 @@
             <td class="px-4 py-3 text-center">{{ $u->email }}</td>
             <td class="px-4 py-3 text-center">{{ ucfirst($u->role->name) }}</td>
             <td class="px-4 py-3 text-center">{{ $u->phone }}</td>
-            <td class="px-4 py-3 flex flex-wrap gap-2 justify-center">
+            <td class="px-4 py-3 flex gap-2 justify-center">
               <button type="button" @click="mode = 'edit'; user = {{ $u->toJson() }}"
                 class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
                 Edit
