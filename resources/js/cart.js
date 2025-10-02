@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
               ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
             </div>
-            <button class="text-red-500 text-sm" onclick="removeFromCart(${item.id})">Remove</button>
+            <button class="text-white bg-pink-200 text-sm p-2 rounded-lg hover:bg-pink-500" onclick="removeFromCart(${item.id})">Remove</button>
           </div>
         `;
       }
