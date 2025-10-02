@@ -70,7 +70,7 @@
               @if(auth()->user()->role->name === 'customer')
                 @if($product->stock > 0)
                   <button
-                    class="mt-3 w-full bg-[#ffcfdf] text-white font-bold px-6 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e55a87] hover:shadow-[0_5px_15px_rgba(255,107,157,0.4)] add-to-cart-btn"
+                    class="mt-3 bg-[#ffcfdf] text-white font-bold px-6 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e55a87] hover:shadow-[0_5px_15px_rgba(255,107,157,0.4)] add-to-cart-btn"
                     data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
                     data-stock="{{ $product->stock }}"
                     data-image="{{ asset($product->image_url ?? 'images/default-product.jpg') }}">

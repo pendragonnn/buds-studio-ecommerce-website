@@ -12,17 +12,94 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem(cartKey, JSON.stringify(cart));
   }
 
+  // Toast Notification Function
+  function showToast(productName, isUpdate = false) {
+    // Remove existing toast if any
+    const existingToast = document.getElementById('cart-toast');
+    if (existingToast) {
+      existingToast.remove();
+    }
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.id = 'cart-toast';
+    toast.className = 'fixed top-20 right-6 z-[60] transform transition-all duration-500 ease-out';
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(400px)';
+    
+    toast.innerHTML = `
+      <div class="bg-white rounded-xl shadow-2xl border-2 border-green-400 p-4 flex items-center gap-3 min-w-[320px] max-w-[400px]">
+        <!-- Success Icon with Animation -->
+        <div class="flex-shrink-0">
+          <div class="relative">
+            <div class="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-75"></div>
+            <div class="relative bg-gradient-to-br from-green-400 to-green-500 rounded-full p-2">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="flex-1 min-w-0">
+          <p class="font-bold text-gray-800 text-sm mb-1">
+            ${isUpdate ? 'Quantity Updated!' : 'Added to Cart!'}
+          </p>
+          <p class="text-xs text-gray-600 truncate">
+            <span class="font-semibold text-pink-600">${productName}</span>
+          </p>
+        </div>
+        
+        <!-- Close Button -->
+        <button onclick="document.getElementById('cart-toast').remove()" 
+                class="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="h-1 bg-gray-200 rounded-b-xl overflow-hidden mt-1">
+        <div class="h-full bg-gradient-to-r from-green-400 to-green-500 animate-progress"></div>
+      </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(400px)';
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.remove();
+        }
+      }, 500);
+    }, 3000);
+  }
+
   // nambah produk ke cart
   function addToCart(product) {
     let cart = getCart();
     const index = cart.findIndex(item => item.id === product.id);
+    let isUpdate = false;
 
     if (index > -1) {
       // kalau sudah ada, tambahin quantity
       if (cart[index].quantity < cart[index].stock) {
         cart[index].quantity++;
+        isUpdate = true;
       } else {
         alert("Stock limit reached!");
+        return;
       }
     } else {
       // kalau belum ada
@@ -31,6 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveCart(cart);
     renderCart();
+    
+    // Show toast notification
+    showToast(product.name, isUpdate);
   }
 
   // hapus produk dari cart
@@ -117,3 +197,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkoutTotal) checkoutTotal.innerText = 'Rp ' + total.toLocaleString();
   }
 });
+
+// Add CSS for progress bar animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes progress {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+  
+  .animate-progress {
+    animation: progress 3s linear forwards;
+  }
+`;
+document.head.appendChild(style);
