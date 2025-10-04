@@ -27,7 +27,7 @@
 
           {{-- Gambar --}}
           <div class="relative h-56 bg-gray-100">
-            <img src="{{ asset($product->image_url ?? 'images/default-product.jpg') }}" alt="{{ $product->name }}"
+            <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}"
               class="w-full h-full object-cover">
             {{-- Badge contoh --}}
             @if($product->is_new)
@@ -53,19 +53,20 @@
               @endphp
               <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 
-                1 0 00.95.69h3.462c.969 0 1.371 1.24.588 
-                1.81l-2.8 2.034a1 1 0 
-                00-.364 1.118l1.07 3.292c.3.921-.755 
-                1.688-1.54 1.118l-2.8-2.034a1 1 0 
-                00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 
-                1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 
-                1 0 00.951-.69l1.07-3.292z" />
+                    1 0 00.95.69h3.462c.969 0 1.371 1.24.588 
+                    1.81l-2.8 2.034a1 1 0 
+                    00-.364 1.118l1.07 3.292c.3.921-.755 
+                    1.688-1.54 1.118l-2.8-2.034a1 1 0 
+                    00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 
+                    1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 
+                    1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <span class="font-semibold">{{ $rating }}</span>
               <span class="text-gray-500">• {{ $sold }} terjual</span>
             </div>
 
             {{-- Add to Cart / Out of Stock --}}
+            {{-- {{ dd( asset($product->image_url)) }} --}}
             @auth
               @if(auth()->user()->role->name === 'customer')
                 @if($product->stock > 0)
@@ -73,7 +74,7 @@
                     class="mt-3 bg-[#ffcfdf] text-white font-bold px-6 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#e55a87] hover:shadow-[0_5px_15px_rgba(255,107,157,0.4)] add-to-cart-btn"
                     data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
                     data-stock="{{ $product->stock }}"
-                    data-image="{{ asset($product->image_url ?? 'images/default-product.jpg') }}">
+                    data-image="{{ asset('storage/' . $product->image_url ?? 'images/default-product.jpg') }}">
                     Add to Cart
                   </button>
                 @else
