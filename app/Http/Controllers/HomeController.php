@@ -50,7 +50,6 @@ class HomeController extends Controller
                     });
                 }
             ], 'quantity')
-            ->take(6)
             ->get();
 
 
