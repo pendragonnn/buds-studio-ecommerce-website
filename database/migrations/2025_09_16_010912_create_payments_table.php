@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->nullable()->constrained('orders')->cascadeOnDelete()->cascadeOnUpdate()->unique();
             $table->decimal('amount', 10, 2);
-            $table->enum('payment_method', ['bank_transfer','e_wallet','cod']);
+            $table->enum('payment_method', ['bank_transfer','e_wallet']);
             $table->enum('status', ['admin_validation','paid','rejected'])->default('admin_validation');
             $table->timestamps();
         });
