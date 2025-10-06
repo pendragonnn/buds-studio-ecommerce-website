@@ -132,31 +132,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cartContainer) cartContainer.innerHTML = "";
     let total = 0;
-    let count = 0;
 
     cart.forEach(item => {
       let isOut = item.stock <= 0;
 
       if (!isOut) {
         total += item.price * item.quantity;
-        count += item.quantity;
       }
 
       if (cartContainer) {
         cartContainer.innerHTML += `
-          <div class="flex items-center gap-4 pb-4 mb-4">
-            <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
-            <div class="flex-1">
-              <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
-              <p class="text-sm">Quantity: ${item.quantity}</p>
-              <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
-              ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
-            </div>
-            <button class="text-white bg-pink-200 text-sm p-2 rounded-lg hover:bg-pink-500" onclick="removeFromCart(${item.id})">Remove</button>
+        <div class="flex items-center gap-4 pb-4 mb-4">
+          <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
+          <div class="flex-1">
+            <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
+            <p class="text-sm">Quantity: ${item.quantity}</p>
+            <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
+            ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
           </div>
-        `;
+          <button class="text-white bg-pink-200 text-sm p-2 rounded-lg hover:bg-pink-500" onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      `;
       }
     });
+
+    // update count berdasarkan jumlah jenis produk
+    const count = cart.filter(item => item.stock > 0).length;
 
     // Update semua UI
     if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString()}`;
@@ -164,6 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkoutTotalFinalEl) checkoutTotalFinalEl.textContent = `Rp ${total.toLocaleString()}`;
     if (countEl) countEl.textContent = count;
     if (countMobileEl) countMobileEl.textContent = count;
+
     // dispatch event ke Alpine
     window.dispatchEvent(new CustomEvent('cartUpdated'));
   }
