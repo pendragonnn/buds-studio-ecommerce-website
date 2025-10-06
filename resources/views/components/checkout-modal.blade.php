@@ -108,19 +108,32 @@
       </div>
 
       <div x-data="{
-    userId: {{ auth()->id() }},
-    get cart() {
-      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
-    },
+    userId: document.body.dataset.userId || 'guest',
+    cart: [],
     get total() {
       return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    },
+    loadCart() {
+      this.cart = JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    init() {
+      this.loadCart();
+      // listen perubahan localStorage (kalau user ubah cart dari tempat lain)
+      window.addEventListener('storage', (e) => {
+        if (e.key === `buds_cart_${this.userId}`) this.loadCart();
+      });
+      // load ulang setiap kali modal checkout dibuka
+      this.$watch('$store.checkout.step', (step) => {
+        if (step === 2 || step === 3) this.loadCart();
+      });
     }
-  }">
+  }" x-init="init()">
+
         {{-- Cart Items --}}
         <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
           <template x-for="item in cart" :key="item.id">
             <div class="flex justify-between border-b py-2">
-              <span x-text="item.name"></span>
+              <span x-text="(item.name) + ' x ' + (item.quantity)"></span>
               <span x-text="'Rp ' + (item.price * item.quantity)"></span>
             </div>
           </template>
@@ -184,19 +197,32 @@
       </div>
 
       <div x-data="{
-    userId: {{ auth()->id() }},
-    get cart() {
-      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
-    },
+    userId: document.body.dataset.userId || 'guest',
+    cart: [],
     get total() {
       return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    },
+    loadCart() {
+      this.cart = JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    init() {
+      this.loadCart();
+      // listen perubahan localStorage (kalau user ubah cart dari tempat lain)
+      window.addEventListener('storage', (e) => {
+        if (e.key === `buds_cart_${this.userId}`) this.loadCart();
+      });
+      // load ulang setiap kali modal checkout dibuka
+      this.$watch('$store.checkout.step', (step) => {
+        if (step === 2 || step === 3) this.loadCart();
+      });
     }
-  }">
+  }" x-init="init()">
+
         {{-- Cart Items --}}
         <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
           <template x-for="item in cart" :key="item.id">
             <div class="flex justify-between border-b py-2">
-              <span x-text="item.name"></span>
+              <span x-text="(item.name) + ' x ' + (item.quantity)"></span>
               <span x-text="'Rp ' + (item.price * item.quantity)"></span>
             </div>
           </template>
@@ -232,6 +258,7 @@
 </div>
 
 <script>
+  window.addEventListener('cartUpdated', () => this.loadCart());
   // Toast Notification Function for Checkout
   function showCheckoutToast(message, type = 'success') {
     const existingToast = document.getElementById('checkout-toast');

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toast.className = 'fixed top-20 right-6 z-[60] transform transition-all duration-500 ease-out';
     toast.style.opacity = '0';
     toast.style.transform = 'translateX(400px)';
-    
+
     toast.innerHTML = `
       <div class="bg-white rounded-xl shadow-2xl border-2 border-green-400 p-4 flex items-center gap-3 min-w-[320px] max-w-[400px]">
         <!-- Success Icon with Animation -->
@@ -65,15 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="h-full bg-gradient-to-r from-green-400 to-green-500 animate-progress"></div>
       </div>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     // Animate in
     setTimeout(() => {
       toast.style.opacity = '1';
       toast.style.transform = 'translateX(0)';
     }, 10);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
       toast.style.opacity = '0';
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveCart(cart);
     renderCart();
-    
+
     // Show toast notification
     showToast(product.name, isUpdate);
   }
@@ -164,6 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkoutTotalFinalEl) checkoutTotalFinalEl.textContent = `Rp ${total.toLocaleString()}`;
     if (countEl) countEl.textContent = count;
     if (countMobileEl) countMobileEl.textContent = count;
+    // dispatch event ke Alpine
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
   }
 
   // Event listener buat add-to-cart
@@ -189,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // update checkout total pas DOM ready
   updateCheckoutTotal();
-  
+
   function updateCheckoutTotal() {
     const cart = getCart();
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
