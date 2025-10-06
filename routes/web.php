@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-orders', [MyOrderController::class, 'index'])->name('my-orders.index');
     Route::post('/my-orders/{order}/cancel', [MyOrderController::class, 'cancel'])->name('my-orders.cancel');
     Route::post('/my-orders/{order}/complete', [MyOrderController::class, 'complete'])->name('my-orders.complete');
+    Route::get('/my-orders/{order}/whatsapp-data', [MyOrderController::class, 'whatsappData'])->name('my-orders.whatsapp-data');
 });
 
 Route::middleware('auth')->group(function () {

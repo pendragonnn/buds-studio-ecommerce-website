@@ -19,13 +19,13 @@
       <h2 class="text-xl font-bold text-center mb-4">Enter Your Delivery Address</h2>
       <form id="checkout-form" class="space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input type="text" placeholder="Nama" x-model="$store.checkout.data.name" readonly
+          <input type="text" placeholder="Name" x-model="$store.checkout.data.name" readonly
             class="w-full border rounded-lg px-4 py-2 bg-gray-100 text-gray-600 cursor-not-allowed">
 
-          <input type="text" placeholder="Nomor Telepon" x-model="$store.checkout.data.phone" readonly
+          <input type="text" placeholder="Phone" x-model="$store.checkout.data.phone" readonly
             class="w-full border rounded-lg px-4 py-2 bg-gray-100 text-gray-600 cursor-not-allowed">
         </div>
-        <input required type="text" placeholder="Alamat Lengkap" x-model="$store.checkout.data.address"
+        <input required type="text" placeholder="Address" x-model="$store.checkout.data.address"
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
 
         <select required x-model="$store.checkout.data.province" @change="
@@ -33,7 +33,7 @@
           $store.checkout.data.province_name = prov ? prov.name : '';
           $store.checkout.fetchCities($event.target.value)
         " class="w-full border rounded-lg px-4 py-2">
-          <option value="">Pilih Provinsi</option>
+          <option value="">Province</option>
           <template x-for="prov in $store.checkout.provinces" :key="prov.id">
             <option :value="prov.id" x-text="prov.name"></option>
           </template>
@@ -44,7 +44,7 @@
           $store.checkout.data.city_name = city ? city.name : '';
           $store.checkout.fetchDistricts($event.target.value)
         " class="w-full border rounded-lg px-4 py-2">
-          <option value="">Pilih Kota</option>
+          <option value="">City</option>
           <template x-for="city in $store.checkout.cities" :key="city.id">
             <option :value="city.id" x-text="city.name"></option>
           </template>
@@ -55,7 +55,7 @@
           $store.checkout.data.district_name = dist ? dist.name : '';
           $store.checkout.fetchSubdistricts($event.target.value)
         " class="w-full border rounded-lg px-4 py-2">
-          <option value="">Pilih Kecamatan</option>
+          <option value="">District</option>
           <template x-for="district in $store.checkout.districts" :key="district.id">
             <option :value="district.id" x-text="district.name"></option>
           </template>
@@ -65,13 +65,13 @@
           const sub = $store.checkout.subdistricts.find(s => s.id == $event.target.value);
           $store.checkout.data.subdistrict_name = sub ? sub.name : '';
         " class="w-full border rounded-lg px-4 py-2">
-          <option value="">Pilih Kelurahan</option>
+          <option value="">Subdistrict</option>
           <template x-for="sub in $store.checkout.subdistricts" :key="sub.id">
             <option :value="sub.id" x-text="sub.name"></option>
           </template>
         </select>
 
-        <input type="text" placeholder="Kode Pos" x-model="$store.checkout.data.postal_code"
+        <input type="text" placeholder="Post Code" x-model="$store.checkout.data.postal_code"
           class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-pink-200">
 
         <div class="flex justify-end">
@@ -107,17 +107,27 @@
         </p>
       </div>
 
-      {{-- Cart Items --}}
-      <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
-        <template x-for="item in JSON.parse(localStorage.getItem('cart') || '[]')" :key="item.id">
-          <div class="flex justify-between border-b py-2">
-            <span x-text="item.name"></span>
-            <span x-text="'Rp ' + (item.price * item.quantity).toLocaleString()"></span>
+      <div x-data="{
+    userId: {{ auth()->id() }},
+    get cart() {
+      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    get total() {
+      return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+  }">
+        {{-- Cart Items --}}
+        <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
+          <template x-for="item in cart" :key="item.id">
+            <div class="flex justify-between border-b py-2">
+              <span x-text="item.name"></span>
+              <span x-text="'Rp ' + (item.price * item.quantity)"></span>
+            </div>
+          </template>
+          <div class="flex justify-between font-bold pt-2">
+            <span>Total:</span>
+            <span x-text="'Rp ' + total"></span>
           </div>
-        </template>
-        <div class="flex justify-between font-bold pt-2">
-          <span>Total:</span>
-          <span id="checkout-total"></span>
         </div>
       </div>
 
@@ -173,17 +183,27 @@
         </p>
       </div>
 
-      {{-- Order Summary --}}
-      <div class="border rounded-lg p-4 mb-4">
-        <template x-for="item in JSON.parse(localStorage.getItem('buds_cart') || '[]')" :key="item.id">
-          <div class="flex justify-between border-b py-2">
-            <span x-text="item.name"></span>
-            <span x-text="'Rp ' + (item.price * item.quantity).toLocaleString()"></span>
+      <div x-data="{
+    userId: {{ auth()->id() }},
+    get cart() {
+      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    get total() {
+      return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+  }">
+        {{-- Cart Items --}}
+        <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
+          <template x-for="item in cart" :key="item.id">
+            <div class="flex justify-between border-b py-2">
+              <span x-text="item.name"></span>
+              <span x-text="'Rp ' + (item.price * item.quantity)"></span>
+            </div>
+          </template>
+          <div class="flex justify-between font-bold pt-2">
+            <span>Total:</span>
+            <span x-text="'Rp ' + total"></span>
           </div>
-        </template>
-        <div class="flex justify-between font-bold pt-2">
-          <span>Total</span>
-          <span id="checkout-total-final"></span>
         </div>
       </div>
 
@@ -197,7 +217,7 @@
       {{-- Chat Us Button with WhatsApp Integration --}}
       <div class="text-center">
         <p class="text-gray-600 mb-2">Chat us to send your proof of payment</p>
-        <button @click="sendOrderToWhatsApp()"
+        <button @click="sendOrderToWhatsApp(); $store.checkout.open = false;"
           class="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-lg hover:from-green-500 hover:to-green-700 font-semibold shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path

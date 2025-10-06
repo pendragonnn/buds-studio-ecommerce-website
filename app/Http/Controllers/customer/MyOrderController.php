@@ -125,4 +125,33 @@ class MyOrderController extends Controller
 
         return back()->with('success', 'Testimony updated successfully!');
     }
+
+    public function whatsappData(Order $order)
+    {
+        if ($order->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        $order->load(['user', 'orderDetails.product']);
+
+        return response()->json([
+            'id' => $order->id,
+            'status' => $order->status,
+            'total' => $order->total_amount,
+            'user' => [
+                'name' => $order->user->name,
+                'phone' => $order->user->phone,
+                'address' => $order->user->address,
+            ],
+            'address' => $order->address,
+            'items' => $order->orderDetails->map(function ($detail) {
+                return [
+                    'name' => $detail->product->name,
+                    'quantity' => $detail->quantity,
+                    'price' => $detail->price,
+                    'subtotal' => $detail->subtotal,
+                ];
+            }),
+        ]);
+    }
 }
