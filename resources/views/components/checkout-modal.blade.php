@@ -107,17 +107,27 @@
         </p>
       </div>
 
-      {{-- Cart Items --}}
-      <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
-        <template x-for="item in JSON.parse(localStorage.getItem('cart') || '[]')" :key="item.id">
-          <div class="flex justify-between border-b py-2">
-            <span x-text="item.name"></span>
-            <span x-text="'Rp ' + (item.price * item.quantity).toLocaleString()"></span>
+      <div x-data="{
+    userId: {{ auth()->id() }},
+    get cart() {
+      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    get total() {
+      return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+  }">
+        {{-- Cart Items --}}
+        <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
+          <template x-for="item in cart" :key="item.id">
+            <div class="flex justify-between border-b py-2">
+              <span x-text="item.name"></span>
+              <span x-text="'Rp ' + (item.price * item.quantity)"></span>
+            </div>
+          </template>
+          <div class="flex justify-between font-bold pt-2">
+            <span>Total:</span>
+            <span x-text="'Rp ' + total"></span>
           </div>
-        </template>
-        <div class="flex justify-between font-bold pt-2">
-          <span>Total:</span>
-          <span id="checkout-total"></span>
         </div>
       </div>
 
@@ -173,17 +183,27 @@
         </p>
       </div>
 
-      {{-- Order Summary --}}
-      <div class="border rounded-lg p-4 mb-4">
-        <template x-for="item in JSON.parse(localStorage.getItem('buds_cart') || '[]')" :key="item.id">
-          <div class="flex justify-between border-b py-2">
-            <span x-text="item.name"></span>
-            <span x-text="'Rp ' + (item.price * item.quantity).toLocaleString()"></span>
+      <div x-data="{
+    userId: {{ auth()->id() }},
+    get cart() {
+      return JSON.parse(localStorage.getItem(`buds_cart_${this.userId}`) || '[]');
+    },
+    get total() {
+      return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+  }">
+        {{-- Cart Items --}}
+        <div class="border rounded-lg p-4 mb-4 max-h-48 overflow-y-auto">
+          <template x-for="item in cart" :key="item.id">
+            <div class="flex justify-between border-b py-2">
+              <span x-text="item.name"></span>
+              <span x-text="'Rp ' + (item.price * item.quantity)"></span>
+            </div>
+          </template>
+          <div class="flex justify-between font-bold pt-2">
+            <span>Total:</span>
+            <span x-text="'Rp ' + total"></span>
           </div>
-        </template>
-        <div class="flex justify-between font-bold pt-2">
-          <span>Total</span>
-          <span id="checkout-total-final"></span>
         </div>
       </div>
 
