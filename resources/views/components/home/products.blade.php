@@ -62,7 +62,7 @@
                     1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <span class="font-semibold">{{ $rating }}</span>
-              <span class="text-gray-500">• {{ $sold }} terjual</span>
+              <span class="text-gray-500">• {{ $sold }} sold</span>
             </div>
 
             {{-- Add to Cart / Out of Stock --}}
@@ -91,7 +91,7 @@
     <div class="flex justify-center mt-10">
       <button id="load-more-btn"
         class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-full transition">
-        Lihat Lebih Banyak
+        Load More
       </button>
     </div>
   </div>
