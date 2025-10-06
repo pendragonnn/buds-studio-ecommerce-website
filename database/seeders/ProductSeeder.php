@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Set of premium press-on nails featuring a passionate red and white theme with intricate hand-painted flower, heart, and abstract designs. Perfect for Valentine\'s or a bold statement.',
                 'price' => 125000,
                 'stock' => 20,
-                'image_url' => 'product_images/n-10.jpg',
+                'image_url' => 'product_images/n-10.png',
             ],
             // n-3.jpg: Pink Ombre with Glitter Tips
             [
@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Soft pink ombre press-on nails that fade to shimmering silver glitter tips. Short, rounded shape for a cute, everyday look with a touch of sparkle.',
                 'price' => 85000,
                 'stock' => 45,
-                'image_url' => 'product_images/n-3.jpg',
+                'image_url' => 'product_images/n-3.png',
             ],
             // n-2.jpg: Brown Marble with Gold Swirls
             [
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Chic set combining solid matte deep brown nails with glossy beige nails featuring delicate gold line swirls. Ideal for an elegant, earthy, and modern style.',
                 'price' => 110000,
                 'stock' => 35,
-                'image_url' => 'product_images/n-2.jpg',
+                'image_url' => 'product_images/n-2.png',
             ],
             // n-6.jpg: Nude Pink with Gold Butterfly & Crystal Accents
             [
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Luxury almond-shaped nails in a soft nude pink base, accented with glitter, gold foil outlines, abstract butterfly/leaf patterns, and dazzling rhinestones.',
                 'price' => 140000,
                 'stock' => 25,
-                'image_url' => 'product_images/n-6.jpg',
+                'image_url' => 'product_images/n-6.png',
             ],
             // n-11.jpg: Brown & Nude Abstract with Starfish
             [
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 'description' => 'A beach-inspired set featuring warm brown and nude tones, marbled patterns, checkerboard designs, and 3D starfish and gold sun accents. Long, square-oval shape.',
                 'price' => 120000,
                 'stock' => 30,
-                'image_url' => 'product_images/n-11.jpg',
+                'image_url' => 'product_images/n-11.png',
             ],
             // n-8.jpg: Red Reptile/Water Effect
             [
@@ -65,7 +65,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Striking set in deep red and white, mixing textured "reptile skin" or coral patterns, water droplet effects, and a detailed 3D red starfish design.',
                 'price' => 135000,
                 'stock' => 18,
-                'image_url' => 'product_images/n-8.jpg',
+                'image_url' => 'product_images/n-8.png',
             ],
             // n-7.jpg: Glittery Brown & Nude Marble
             [
@@ -74,7 +74,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Elegant mix of solid dark brown, light nude, and stunning marble effect nails with embedded gold glitter foil and streaks. Perfect for fall/winter.',
                 'price' => 115000,
                 'stock' => 40,
-                'image_url' => 'product_images/n-7.jpg',
+                'image_url' => 'product_images/n-7.png',
             ],
             // n-9.jpg: Pink & Gold Lines/Lace
             [
@@ -83,7 +83,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Feminine, soft pink nails with intricate metallic gold line work, lattice patterns, and silver glitter French tips. Accented with small, subtle rhinestones.',
                 'price' => 125000,
                 'stock' => 28,
-                'image_url' => 'product_images/n-9.jpg',
+                'image_url' => 'product_images/n-9.png',
             ],
             // n-5.jpg: Simple Light Pink Glossy
             [
@@ -92,7 +92,7 @@ class ProductSeeder extends Seeder
                 'description' => 'A classic, minimalist set of light rosy pink press-on nails with a flawless, high-gloss finish. Suitable for professional settings or a clean look.',
                 'price' => 75000,
                 'stock' => 50,
-                'image_url' => 'product_images/n-5.jpg',
+                'image_url' => 'product_images/n-5.png',
             ],
             // n-4.jpg: Brown Glitter Marble Swirl
             [
@@ -101,7 +101,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Rich, warm mocha-brown nails featuring a beautiful, subtle marbled swirl effect and heavy silver glitter placement. A cozy yet glamorous design.',
                 'price' => 105000,
                 'stock' => 38,
-                'image_url' => 'product_images/n-4.jpg',
+                'image_url' => 'product_images/n-4.png',
             ],
             // n-1.jpg: Nude Pink with White Flowers and Gold Chain
             [
@@ -110,7 +110,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Sweet, almond-shaped press-on nails in a soft nude base, decorated with delicate hand-painted white daisy/flower accents and chic gold chain details. Perfect for a feminine, everyday look.',
                 'price' => 115000,
                 'stock' => 32,
-                'image_url' => 'product_images/n-1.jpg',
+                'image_url' => 'product_images/n-1.png',
             ],
              // ps-11.jpg: White & Silver Chain (Long)
             [

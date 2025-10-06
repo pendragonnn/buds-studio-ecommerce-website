@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Order;
 use App\Models\Testimony;
 use Illuminate\Database\Seeder;
 
@@ -13,32 +12,36 @@ class TestimonySeeder extends Seeder
      */
     public function run(): void
     {
-        // Order ID yang memiliki status 'completed' dari OrderSeeder: 1, 4, dan 8.
-        $completedOrderIds = [1, 4, 8]; // Data testimoni hanya dibuat untuk ID ini.
-
         Testimony::insert([
-            // Testimony untuk Order ID 1 (Status: COMPLETED | Customer: Sayida Syahira)
-            // Produk: Nude Daisy Nails + Pure White Heart Strap
             [
-                'order_detail_id' => 1,
+                'order_detail_id' => 1, // Nude Daisy Gold Chain Nails
                 'rating' => 5,
-                'comment' => 'Kukunya bagus banget! Desain bunga daisy dan rantai emasnya cantik. Phone strap-nya juga elegan dan kualitas manik-maniknya premium. Puas banget!',
+                'comment' => 'Kukunya bagus banget! Desain bunga daisy dan rantai emasnya cantik. Kualitas premium dan tahan lama. Puas banget!',
             ],
-
-            // Testimony untuk Order ID 4 (Status: COMPLETED | Customer: Fajar Nugraha)
-            // Produk: 2x Red Romance Nails + 1x Sweet Candy Pop Strap
             [
-                'order_detail_id' => 4,
+                'order_detail_id' => 2, // Pure White Heart Charm Strap
                 'rating' => 5,
-                'comment' => 'Kuku Red Romance-nya keren, cocok buat acara formal. Phone strap candy pop-nya lucu banget, warnanya cerah dan playful. Anakku suka!',
+                'comment' => 'Phone strap Pure White-nya mewah banget! Kualitas manik-manik sangat bagus dan elegan. Will definitely order again!',
             ],
-
-            // Testimony untuk Order ID 8 (Status: COMPLETED | Customer: Wulan Sari)
-            // Produk: Simple Light Pink Nails + Dark Star Galaxy Strap
             [
-                'order_detail_id' => 8,
+                'order_detail_id' => 5, // Red Romance Press-On Nails (2 pcs)
                 'rating' => 5,
-                'comment' => 'Press-on Simple Pink Glossy ini sempurna buat daily, terlihat natural. Phone strap Dark Star-nya juga keren, cocok buat style gothic minimalis. Love it!',
+                'comment' => 'Kuku Red Romance-nya keren, cocok buat acara formal. Detail bunga dan hati di kukunya rapi sekali, terlihat seperti nail art di salon mahal.',
+            ],
+            [
+                'order_detail_id' => 6, // Sweet Candy Pop Phone Strap
+                'rating' => 4,
+                'comment' => 'Phone strap candy pop-nya lucu banget, warnanya cerah dan playful. Anakku suka! Pengiriman sedikit telat tapi produknya bagus.',
+            ],
+            [
+                'order_detail_id' => 17, // Simple Glossy Light Pink Nails
+                'rating' => 5,
+                'comment' => 'Press-on Simple Pink Glossy ini sempurna buat daily, terlihat natural dan gampang diaplikasikan. Love it!',
+            ],
+            [
+                'order_detail_id' => 18, // Dark Star Galaxy Phone Strap
+                'rating' => 4,
+                'comment' => 'Phone strap Dark Star-nya keren banget, cocok buat style gothic minimalis. Awalnya ragu tapi ternyata kokoh. Good value for money.',
             ],
         ]);
     }
