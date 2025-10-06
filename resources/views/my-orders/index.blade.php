@@ -135,6 +135,17 @@
                             <p class="font-semibold">Total: Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
 
                             @if($order->status === 'pending' && $order->payment->status === 'admin_validation')
+                                <button 
+                                    onclick="sendOrderToWhatsApp({{ $order->id }})" 
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition duration-200">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                                    </svg>
+                                    Chat Admin
+                                </button>
+                            @endif
+
+                            @if($order->status === 'pending' && $order->payment->status === 'admin_validation')
                                 <form method="POST" action="{{ route('my-orders.cancel', $order->id) }}">
                                     @csrf
                                     <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
@@ -176,5 +187,86 @@
                 }
             }
         }
+
+        async function sendOrderToWhatsApp(orderId) {
+  try {
+    const res = await fetch(`/my-orders/${orderId}/whatsapp-data`);
+    if (!res.ok) throw new Error('Failed to fetch order data');
+    const order = await res.json();
+    console.log('Order fetched:', order);
+
+    const nf = new Intl.NumberFormat('id-ID');
+
+    const parseNum = (v) => {
+      if (v === null || v === undefined || v === '') return NaN;
+      if (typeof v === 'number') return v;
+      // remove thousands separators if any, then parse
+      const cleaned = String(v).replace(/[,\s]/g, '');
+      const n = Number(cleaned);
+      return isNaN(n) ? NaN : n;
+    };
+
+    // Determine total (fallback compute from items if total missing)
+    let totalNum = parseNum(order.total);
+    const items = order.items || [];
+
+    // Build items list and compute fallback totals if necessary
+    let itemsList = '';
+    let computedTotal = 0;
+
+    items.forEach((item, i) => {
+      const qty = Number(item.quantity) || 1;
+      let priceNum = parseNum(item.price);
+      const subtotalNum = parseNum(item.subtotal);
+
+      // If price is missing but subtotal present, try to infer price
+      if (isNaN(priceNum) && !isNaN(subtotalNum) && qty > 0) {
+        priceNum = subtotalNum / qty;
+      }
+
+      // If subtotal missing but price available, compute subtotal
+      const finalSubtotalNum = !isNaN(subtotalNum) ? subtotalNum : (!isNaN(priceNum) ? priceNum * qty : 0);
+
+      computedTotal += finalSubtotalNum;
+
+      const priceStr = !isNaN(priceNum) ? `Rp ${nf.format(priceNum)}` : 'Rp -';
+      const subtotalStr = `Rp ${nf.format(finalSubtotalNum)}`;
+
+      itemsList += `${i + 1}. ${item.name}\n`;
+      itemsList += `   Qty: ${qty} x ${priceStr}\n`;
+      itemsList += `   Subtotal: ${subtotalStr}\n`;
+    });
+
+    if (isNaN(totalNum)) {
+      totalNum = computedTotal;
+    }
+
+    const totalStr = `Rp ${nf.format(totalNum)}`;
+
+    const address = order.address || 'Not provided';
+
+    // Build message
+    let message = '*BUDS STUDIO - ORDER VALIDATION*\n\n';
+    message += `Order ID: ${order.id}\n`;
+    message += `Status: ${order.status}\n\n`;
+    message += `===== ORDER DETAILS =====\n`;
+    message += itemsList + '\n';
+    message += `TOTAL: *${totalStr}*\n\n`;
+    message += `===== CUSTOMER INFO =====\n`;
+    message += `Name: ${order.user?.name || '-'}\n`;
+    message += `Phone: ${order.user?.phone || '-'}\n`;
+    message += `Address: ${order.user.address}\n\n`;
+    message += `I would like to confirm my payment, thank you!`;
+    console.log(order.user);
+
+    const waNumber = "6281809740724";
+    const url = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank");
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send order to WhatsApp. Please try again.");
+  }
+}
     </script>
 </x-app-layout>
