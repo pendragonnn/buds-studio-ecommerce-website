@@ -14,7 +14,7 @@
 
     <!-- Section Header -->
     <div class="text-center mb-12 md:mb-16">
-      <h2 class="text-3xl font-bold bg-gradient-to-r text-slate-700 bg-clip-text text-transparent mb-3 md:mb-4 px-4">
+      <h2 class="text-3xl font-bold bg-gradient-to-r text-slate-700 bg-clip-text mb-3 md:mb-4 px-4">
         Custom Order
       </h2>
       <p class="text-base sm:text-lg md:text-md text-gray-600 max-w-2xl mx-auto leading-relaxed px-4">
