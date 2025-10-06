@@ -35,6 +35,12 @@ class HomeController extends Controller
             }
         }
 
+        // Ratings summary
+        $reviews = Testimony::with(['orderDetail.product', 'orderDetail.order.user'])->latest()->get();
+        $totalReviews = $reviews->count();
+        $averageRating = $reviews->avg('rating');
+        $fiveStarReviews = $reviews->where('rating', 5)->count();
+
         $testimonies = Testimony::with(['orderDetail.order.user'])
             ->orderByDesc('rating')
             ->orderByDesc('created_at')
@@ -55,6 +61,6 @@ class HomeController extends Controller
 
         // dd( $testimonies);
         // $products = Product::with('category')->take(6)->get();
-        return view('home', compact('products', 'categories', 'testimonies'));
+        return view('home', compact('products', 'categories', 'testimonies', 'totalReviews', 'averageRating'));
     }
 }

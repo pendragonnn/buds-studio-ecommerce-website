@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toast.className = 'fixed top-20 right-6 z-[60] transform transition-all duration-500 ease-out';
     toast.style.opacity = '0';
     toast.style.transform = 'translateX(400px)';
-    
+
     toast.innerHTML = `
       <div class="bg-white rounded-xl shadow-2xl border-2 border-green-400 p-4 flex items-center gap-3 min-w-[320px] max-w-[400px]">
         <!-- Success Icon with Animation -->
@@ -65,15 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="h-full bg-gradient-to-r from-green-400 to-green-500 animate-progress"></div>
       </div>
     `;
-    
+
     document.body.appendChild(toast);
-    
+
     // Animate in
     setTimeout(() => {
       toast.style.opacity = '1';
       toast.style.transform = 'translateX(0)';
     }, 10);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
       toast.style.opacity = '0';
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     saveCart(cart);
     renderCart();
-    
+
     // Show toast notification
     showToast(product.name, isUpdate);
   }
@@ -132,31 +132,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cartContainer) cartContainer.innerHTML = "";
     let total = 0;
-    let count = 0;
 
     cart.forEach(item => {
       let isOut = item.stock <= 0;
 
       if (!isOut) {
         total += item.price * item.quantity;
-        count += item.quantity;
       }
 
       if (cartContainer) {
         cartContainer.innerHTML += `
-          <div class="flex items-center gap-4 pb-4 mb-4">
-            <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
-            <div class="flex-1">
-              <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
-              <p class="text-sm">Quantity: ${item.quantity}</p>
-              <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
-              ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
-            </div>
-            <button class="text-white bg-pink-200 text-sm p-2 rounded-lg hover:bg-pink-500" onclick="removeFromCart(${item.id})">Remove</button>
+        <div class="flex items-center gap-4 pb-4 mb-4">
+          <img src="${item.image_url}" class="w-16 h-16 object-cover rounded" />
+          <div class="flex-1">
+            <p class="font-semibold ${isOut ? 'text-red-500' : ''}">${item.name}</p>
+            <p class="text-sm">Quantity: ${item.quantity}</p>
+            <p class="text-sm">Rp ${item.price.toLocaleString()}</p>
+            ${isOut ? '<p class="text-xs text-red-600">Out of stock</p>' : ''}
           </div>
-        `;
+          <button class="text-white bg-pink-200 text-sm p-2 rounded-lg hover:bg-pink-500" onclick="removeFromCart(${item.id})">Remove</button>
+        </div>
+      `;
       }
     });
+
+    // update count berdasarkan jumlah jenis produk
+    const count = cart.filter(item => item.stock > 0).length;
 
     // Update semua UI
     if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString()}`;
@@ -164,6 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (checkoutTotalFinalEl) checkoutTotalFinalEl.textContent = `Rp ${total.toLocaleString()}`;
     if (countEl) countEl.textContent = count;
     if (countMobileEl) countMobileEl.textContent = count;
+
+    // dispatch event ke Alpine
+    window.dispatchEvent(new CustomEvent('cartUpdated'));
   }
 
   // Event listener buat add-to-cart
@@ -189,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // update checkout total pas DOM ready
   updateCheckoutTotal();
-  
+
   function updateCheckoutTotal() {
     const cart = getCart();
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);

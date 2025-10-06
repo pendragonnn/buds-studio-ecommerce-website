@@ -104,6 +104,9 @@ class CheckoutController extends Controller
                     'quantity' => $od['quantity'],
                     'subtotal' => $od['subtotal'],
                 ]);
+
+                // update stock
+                $od['product']->decrement('stock', $od['quantity']);
             }
 
             // 5) Create Payment record
