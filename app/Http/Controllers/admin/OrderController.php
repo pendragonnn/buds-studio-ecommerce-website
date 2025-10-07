@@ -10,14 +10,23 @@ class OrderController extends Controller
 {
     public function cancel(Order $order)
     {
-        DB::transaction(function () use ($order) {
+        \DB::transaction(function () use ($order) {
+            // Kembalikan stok produk
+            foreach ($order->orderDetails as $detail) {
+                $product = $detail->product;
+                if ($product) {
+                    $product->increment('stock', $detail->quantity);
+                }
+            }
+
+            // Update status order & payment
             $order->update(['status' => 'cancelled']);
             if ($order->payment) {
                 $order->payment->update(['status' => 'rejected']);
             }
         });
 
-        return back()->with('success', 'Order & payment cancelled.');
+        return back()->with('success', 'Order & payment cancelled. Product stock restored.');
     }
 
     public function confirmPayment(Order $order)

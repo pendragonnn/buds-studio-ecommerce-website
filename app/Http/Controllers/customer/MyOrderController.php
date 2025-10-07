@@ -64,8 +64,19 @@ class MyOrderController extends Controller
             return back()->with('error', 'Order tidak bisa dibatalkan.');
         }
 
-        $order->update(['status' => 'cancelled']);
-        $order->payment->update(['status' => 'rejected']);
+        \DB::transaction(function () use ($order) {
+            // Kembalikan stok produk yang ada di order_detail
+            foreach ($order->orderDetails as $detail) {
+                $product = $detail->product;
+                if ($product) {
+                    $product->increment('stock', $detail->quantity);
+                }
+            }
+
+            // Update status order & payment
+            $order->update(['status' => 'cancelled']);
+            $order->payment->update(['status' => 'rejected']);
+        });
 
         return back()->with('success', 'Order berhasil dibatalkan.');
     }
