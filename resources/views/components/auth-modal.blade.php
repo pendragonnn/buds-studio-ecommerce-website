@@ -10,7 +10,6 @@
      x-transition:leave-end="opacity-0"
      @click="$store.authModal.open = false"
      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
->
     
     <!-- Modal Container -->
     <div x-show="$store.authModal.open"
