@@ -132,12 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cartContainer) cartContainer.innerHTML = "";
     let total = 0;
+    let count = 0;
 
     cart.forEach(item => {
       let isOut = item.stock <= 0;
 
       if (!isOut) {
         total += item.price * item.quantity;
+        count += item.quantity;
       }
 
       if (cartContainer) {
@@ -155,9 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       }
     });
-
-    // update count berdasarkan jumlah jenis produk
-    const count = cart.filter(item => item.stock > 0).length;
 
     // Update semua UI
     if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString()}`;
