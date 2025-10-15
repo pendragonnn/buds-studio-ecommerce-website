@@ -17,7 +17,7 @@
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.css.min.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/cart.js'])
@@ -27,18 +27,22 @@
         [x-cloak] {
             display: none !important;
         }
+
         /* Optional: Custom animation for smoother pulse */
         @keyframes smooth-pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 0.75;
                 transform: scale(1);
             }
+
             50% {
                 opacity: 0;
                 transform: scale(1.5);
             }
         }
-        
+
         .animate-ping {
             animation: smooth-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
@@ -138,6 +142,150 @@
             {{ $slot }}
         </main>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const messages = {
+                register: @json(session('register_success')),
+                admin: @json(session('login_success_admin')),
+                customer: @json(session('login_success_customer')),
+                logout: @json(session('logout_success'))
+            };
+
+            let message = '';
+            let type = '';
+
+            if (messages.register) {
+                message = messages.register;
+                type = 'register';
+            } else if (messages.admin) {
+                message = messages.admin;
+                type = 'admin';
+            } else if (messages.customer) {
+                message = messages.customer;
+                type = 'customer';
+            } else if (messages.logout) {
+                message = messages.logout;
+                type = 'logout';
+            }
+
+            if (!message) return; // Tidak ada notifikasi
+
+            // --- Warna berdasarkan type (menggunakan class lengkap untuk Tailwind) ---
+            const colorClasses = {
+                register: {
+                    border: 'border-green-400',
+                    bgGradient: 'from-green-400 to-green-500',
+                    bgAnimate: 'bg-green-400',
+                    progress: 'from-green-400 to-green-500'
+                },
+                admin: {
+                    border: 'border-indigo-400',
+                    bgGradient: 'from-indigo-400 to-indigo-500',
+                    bgAnimate: 'bg-indigo-400',
+                    progress: 'from-indigo-400 to-indigo-500'
+                },
+                customer: {
+                    border: 'border-blue-400',
+                    bgGradient: 'from-blue-400 to-blue-500',
+                    bgAnimate: 'bg-blue-400',
+                    progress: 'from-blue-400 to-blue-500'
+                },
+                logout: {
+                    border: 'border-pink-400',
+                    bgGradient: 'from-pink-400 to-pink-500',
+                    bgAnimate: 'bg-pink-400',
+                    progress: 'from-pink-400 to-pink-500'
+                }
+            };
+            const colors = colorClasses[type] || colorClasses.register;
+
+            // --- Ikon berdasarkan type ---
+            const iconMap = {
+                register: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>`,
+                admin: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>`,
+                customer: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>`,
+                logout: `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0V7a2 2 0 114 0v1" />`
+            };
+            const icon = iconMap[type] || iconMap.register;
+
+            // --- Judul berdasarkan type ---
+            const titleMap = {
+                register: 'Registration Successful!',
+                admin: 'Admin Login Successful!',
+                customer: 'Login Successful!',
+                logout: 'Logged Out!'
+            };
+            const title = titleMap[type] || 'Success!';
+
+            // --- Template Toast ---
+            const toast = document.createElement('div');
+            toast.id = 'auth-toast';
+            toast.className = 'fixed top-20 right-6 z-[60] transform transition-all duration-500 ease-out';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(400px)';
+
+            toast.innerHTML = `
+        <div class="bg-white rounded-xl shadow-2xl border-2 ${colors.border} p-4 flex items-center gap-3 min-w-[320px] max-w-[400px]">
+          <div class="relative">
+            <div class="absolute inset-0 ${colors.bgAnimate} rounded-full animate-ping opacity-75"></div>
+            <div class="relative bg-gradient-to-br ${colors.bgGradient} rounded-full p-2">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ${icon}
+              </svg>
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <p class="font-bold text-gray-800 text-sm mb-1">${title}</p>
+            <p class="text-xs text-gray-600">${message}</p>
+          </div>
+
+          <button onclick="document.getElementById('auth-toast').remove()" 
+                  class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="h-1 bg-gray-200 rounded-b-xl overflow-hidden mt-1">
+          <div class="h-full bg-gradient-to-r ${colors.progress} toast-progress"></div>
+        </div>
+      `;
+
+            document.body.appendChild(toast);
+
+            // --- Animasi muncul ---
+            setTimeout(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(0)';
+            }, 10);
+
+            // --- Auto remove setelah 3 detik ---
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(400px)';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        });
+
+        // --- Animasi progress bar (hanya perlu sekali) ---
+        if (!document.getElementById('toast-progress-style')) {
+            const style = document.createElement('style');
+            style.id = 'toast-progress-style';
+            style.textContent = `
+      @keyframes progress {
+        from { width: 100%; }
+        to { width: 0%; }
+      }
+      .toast-progress {
+        animation: progress 3s linear forwards;
+      }
+    `;
+            document.head.appendChild(style);
+        }
+    </script>
 </body>
 
 </html>

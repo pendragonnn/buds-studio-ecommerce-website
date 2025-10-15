@@ -73,13 +73,13 @@
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Email</h3>
                 <p class="text-gray-600 text-sm mb-3">Send us detailed inquiries or business
                   partnerships</p>
-                <p class="text-lg font-semibold text-gray-800 mb-4">buds.studio@gmail.com</p>
-                <a href="mailto:buds.studio@gmail.com?subject=Inquiry%20from%20Website&body=Hi%20Buds%20Studio,%0A%0AI%20have%20a%20question%20about..."
+                <p class="text-lg font-semibold text-gray-800 mb-4">beadsbybuds@gmail.com</p>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=beadsbybuds@gmail.com&su=Inquiry%20from%20Website&body=Hi%20Buds%20Studio,%0A%0AI%20have%20a%20question%20about..."
+                  target="_blank"
                   class="inline-flex items-center px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600 transition-colors">
                   <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                    </path>
+                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2z" />
                   </svg>
                   Send Email
                 </a>
@@ -123,7 +123,7 @@
             </a>
 
             <!-- Shopee -->
-            <a href="https://shopee.co.id/buds_studiozz" target="_blank"
+            <a href="https://shopee.co.id/hddra" target="_blank"
               class="group flex items-center p-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300">
               <div
                 class="w-10 h-10 bg-white bg-opacity-20 rounded-xl flex items-center justify-center mr-3 group-hover:bg-opacity-30 transition-all">
@@ -328,13 +328,17 @@ You have a new inquiry:
 
 💬 Message:
 ${this.form.message}
-        `;
+      `;
 
-        // Encode biar aman di URL
-        let mailtoLink = `mailto:buds.studio@gmail.com?subject=${encodeURIComponent(this.form.subject)}&body=${encodeURIComponent(body)}`;
+        // Encode agar aman di URL
+        const subject = encodeURIComponent(this.form.subject);
+        const encodedBody = encodeURIComponent(body);
 
-        // Redirect ke mailto link
-        window.location.href = mailtoLink;
+        // Langsung buka Gmail compose window
+        const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=beadsbybuds@gmail.com&su=${subject}&body=${encodedBody}`;
+
+        // Buka Gmail di tab baru
+        window.open(gmailLink, '_blank');
 
         this.submitting = false;
       }

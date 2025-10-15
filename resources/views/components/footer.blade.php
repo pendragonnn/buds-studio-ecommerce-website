@@ -27,28 +27,33 @@
       <!-- Contact & Social -->
       <div>
         <h3 class="text-lg font-semibold text-pink-200 mb-4">Get in Touch</h3>
-        <p class="text-sm text-gray-400">📧 buds.studio@gmail.com</p>
+        <p class="text-sm text-gray-400">📧 beadsbybuds@gmail.com</p>
         <p class="text-sm text-gray-400">📱 +62 818-0974-0724</p>
-        <div class="flex space-x-4 mt-4">
-          <a href="#" class="text-pink-500 hover:text-pink-700">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M7.75 2C4.68 2 2 4.68 2 7.75v8.5C2 19.32 4.68 22 7.75 22h8.5C19.32 22 22 19.32 22 16.25v-8.5C22 4.68 19.32 2 16.25 2h-8.5zM12 7a5 5 0 100 10 5 5 0 000-10zm6.25-.75a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
-            </svg>
+        <div class="flex space-x-4 mt-4 items-center justify-start">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/buds.studioo/" target="_blank"
+            class="transition-transform hover:scale-110">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADK0lEQVR4nO2ZO09UQRiGnwIVIpddy6UVwViIgp2X2ElMVH4BISp/QAWpvbRGQqnBP6CYWMnitVN7EWxUbAUFhArXfMl7komB3TmX3Tkm+yaTnOz55jvz7nzXGWiiiVygF5gA5oEFYAOoZDRMl+ksA+PAoXoQGAReZLho3zEPDGRBYA8wDfyR4h/AA+CCdmc/2cF0mc6LwEN9q6JvTwEtSRUXgZdS9hu4BXTSOHQCt4FNZ3cKSXYiMqXvMq1QOAp80VreAHvjTJ7WxG9AifAoActa033fSYOySzOnY+QHx2Vm23quicikzCfyhjtam4Xoquh1olMjHTvCefmkmdHQDu+7gBWtsaeaogkJWfgLgWUnh5h/7oQZvb9RTVFZQhbL80pkWO/nqilalFCa8sDyzyjwFPik0mNDz7N6ZzI7YUhkjMS5GuZv+nbFmoQ6EhBoAyaBnx6lxypwE2hN8J0O6bC17oroQ0ni/Adn/nPgilPG2OjTb3OO3PuEeapSa51JiJRkCtF2n/SYc8ox4yRJt5I1kTZnJ17FrIXMT15r7ruYZlbJmsik5BeSFHQiE+2Mhf4gRIqOY/uY02444wSAYggio45jp0WUv0ZCEJmV7GXS46p0PQ5BJLJtC7Fp0eeT5OpFZF2y7aRHu3St/+9EOqXrl6d807SqObuVHWkxFtLZR33KaU/Mhwy/RSUxkz9Ncpx1EmIhdImyGCMru7A5Sz4dX72JtKoUr6gAjEPmAPA2L0Xjv2X8kmonH3P6nKcyPkJJ/2o0v6xIdFh5pl3PY45jRztRl8ZqLUWr26pSfNWz1bWrg331anUXMzh8KCiMPlGfsq6xoN9GEvYusQ4fQh8H+WDYp30YD3xA54NHWuO1PB+Z1oL3kSlOVLFLlrzhbpyudEDXCpu+x/cNwiCwpWuFft9JU2Jux5fdhEe3cy58L87EFsfE7Jj/BOHQD3x1Em3sS9GCQ2ZTlyzmbI1Cl3xiy2kXEuefFt3ZbUvZiu4nLqmry6LNjWC6+pQnZpzotC1zSnw97eII8Myj9Mh6lOsVcHrUN8w55UdWizZdHxVarwMH60GgiSaIh7/0wax6IqjhkwAAAABJRU5ErkJggg=="
+              alt="Instagram" class="w-7 h-7 object-contain bg-pink-200 rounded p-1" />
           </a>
-          <a href="#" class="text-pink-500 hover:text-pink-700">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M21.54 5.2a8.75 8.75 0 01-2.52.69 4.4 4.4 0 001.93-2.42 8.77 8.77 0 01-2.77 1.06A4.38 4.38 0 0016 3c-2.44 0-4.42 1.98-4.42 4.42 0 .35.04.7.11 1.04A12.46 12.46 0 013 4.6a4.42 4.42 0 001.36 5.9 4.34 4.34 0 01-2-.55v.06c0 2.14 1.52 3.92 3.54 4.32a4.4 4.4 0 01-2 .08 4.42 4.42 0 004.12 3.06A8.8 8.8 0 013 19.54a12.4 12.4 0 006.73 1.97c8.08 0 12.5-6.7 12.5-12.5 0-.19 0-.38-.01-.57a8.95 8.95 0 002.2-2.28z" />
-            </svg>
+
+          <!-- Shopee -->
+          <a href="https://shopee.co.id/hddra" target="_blank" class="transition-transform hover:scale-110">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADq0lEQVR4nO2ZW4hOURiGH0PIaSgkZ4ULDSVcMI5zxZ1TDrnggnFWLqYociGSQzmlhhsJM06Jwg2KKArFkAxDJHGDcZoZGqNP79Ruav97rf3v37/JU+vuO7xr77XX+ta34T8ZGQPsAx4CtRpVwF5gNH8BPYFjQFPEOAr0IKUMBGok9AuwU0+/C1Cot7QL+Cqbp8AAUkY34IUE3tKkwhgE3Jbtc6ArKeJMYBKdHey7BCZzgpRQIkHvgf4efvbWPsh3IingqsSUxfBdL9/L5Jk+wE9trx1j+Nsy/KwYvckjy/VEK7KIcVIxlpJHDklEaRYxlinGQfLIdYmYkEWMSYpxLUFdv3eP5kMtzaMm6uE9SIHIJsdxP9NE3snIaqa00lMaTWsoz2Q0mPQyJFCrhXJXRqNIL6Ol8Y7LKT2F9FIijVcyGZ2V0YwsErUCpgJHtFStpK8HXgOXgFVAryziz5BG0xrKYRktjJnESvQbDjtOoy5gtt59WagYpjWUvTJaE3MSrwP3jFUS2kajj57mcaBBdvdi5FkjX9MaymYZbYiR4Ip8zwEdImxtae0GJsfIs0F5TGsoZTLa7hl8hPzeAJ3ILdtdrg2lMiqPWfjtJ/eUu1TL82RU6Rm8zOV1J0SlcpnWUKbJ6KJn8Nl/8KZ3UblMayjjZHTTM3jHwP3bLlu55KbyFGcyKpKRdQV9ma8rq/mfymG9VqUcpjWUfjJ6FTPJAuCTYnxXm8hO+QKS45XiZ+zYFMrImglx6atra33gJH8JbPJsF4VRq5imNZQClQ+NCTzF7sBa4FGL0sQaFUNjxixQjJ8u+j66zNiTYtVG3xS7TiWML4U+K6Z5Ddr3kjR91Ylv3hTWefr38/mGnXaFLJmuzeAHMNLDr0ja7L9LJDdc9ukE2Ko81htzpdjnnHM6ORNgqPI89vCZJh+7oEVS4VLLJEB75bGKwJV5PrVgeQJtUBeGKU+1h0+pT3XuVO+3YCwwEz+OKI/9NPWtsnckdgNrsUSq5XPa4bCza+822X+K+E0XdoPdiAOrZbwHd5YEDtJGbRhzte+3lnib4IrASd+gbdiHPT49BacuRUgr80Dgr22m8QQYjz+H5b/IxXi6S98o4kfnYuC8uioNmtwztYBm6Q3F4axP382pk5cnrkqbaYxkeOAfRNqokTbTGEm7wIcbZx3niomBA7Stq9MWOb0F5iRc0vtSqB3wbZxOTdtAzZWmccHnbTRj+/9K9Wfr8ii+ThrsDDJN/za/AGzkxuSBsIT9AAAAAElFTkSuQmCC"
+              alt="Shopee" class="w-7 h-7 object-contain bg-pink-200 rounded p-1" />
           </a>
-          <a href="#" class="text-pink-500 hover:text-pink-700">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M12 2.04c-5.52 0-9.96 4.44-9.96 9.96 0 4.41 2.87 8.15 6.84 9.49.5.09.68-.22.68-.49v-1.72c-2.78.61-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.91-.63.07-.62.07-.62 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.64-1.33-2.22-.25-4.55-1.11-4.55-4.92 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.53 9.53 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.82-2.34 4.67-4.56 4.92.36.31.68.92.68 1.86v2.75c0 .27.18.59.69.49a9.96 9.96 0 006.83-9.49c0-5.52-4.44-9.96-9.96-9.96z" />
-            </svg>
+
+          <!-- Gmail -->
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=beadsbybuds@gmail.com&su=Inquiry%20from%20Website&body=Hi%20Buds%20Studio,%0A%0AI%20have%20a%20question%20about..."
+            target="_blank" class="transition-transform hover:scale-110">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABEElEQVR4nO3UPS9EQRTG8Z+XiEQoVBL7YSRaKjodHZ3GV1Aolbai0+lU2i1pVHyA/QLeWVk5Jte1V3bYVWzuPzm5c2fOPM/N3DmHmppRZgGX6AwprtEomy7Hcx6tIZi2Qrvo9cEj1mM8g/MBml5gLrRXcV807ia8YDPep3A6ANMzTIfmBp5j/otxN96wG3MTOPqD6TEmQ2sHr4W1b8afsR/zYzj4hekhxkNjr8d6pXE/m6uin49OVImcFI5ru3Rc5Sj/puYPuYmcC/LUIyf3Yib6KYnZyF3BXWHtAWuZpZjIbQJLuMVNjHObTyKn7S3q3W6vMnQSOaXSxlb03UaM25kaic4/R6I27oy8cU3N6PAOZuyuMigmDjQAAAAASUVORK5CYII="
+              alt="Gmail" class="w-7 h-7 object-contain bg-pink-200 rounded p-1" />
           </a>
         </div>
+
       </div>
     </div>
 

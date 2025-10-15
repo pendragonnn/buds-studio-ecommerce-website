@@ -31,12 +31,13 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user && $user->role->name === 'admin') {
-
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')
+                ->with('login_success_admin', 'Welcome back, Admin');
         }
 
         // default customer tetap di homepage
-        return redirect()->route('home');
+        return redirect()->route('home')
+            ->with('login_success_customer', 'Welcome back to Buds Studio 💅');
     }
 
     /**
@@ -50,6 +51,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')
+            ->with('logout_success', 'You have logged out successfully. See you soon! 👋');
     }
 }
