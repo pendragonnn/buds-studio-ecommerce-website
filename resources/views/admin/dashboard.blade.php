@@ -1,3 +1,4 @@
+@section('title', 'Buds Studio - Admin Dashboard')
 <x-app-layout>
     {{-- resources/views/admin/dashboard.blade.php --}}
     <div class="min-h-screen bg-gray-100" x-data="{ 
