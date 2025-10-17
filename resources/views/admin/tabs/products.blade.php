@@ -1,4 +1,4 @@
-<div class="bg-white shadow rounded-xl p-6" x-data="{ mode: 'add', product: {}, openDelete: false }">
+<div class="bg-white shadow rounded-xl p-6" x-data="{ mode: 'add', product: {}, deleteProduct: {}, openDelete: false }">
 
   <h3 class="text-lg font-semibold mb-4">Product Management</h3>
 
@@ -81,7 +81,7 @@
                   class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
                   Edit
                 </button>
-                <button @click="openDelete = true; product = {{ $p->toJson() }}" type="button"
+                <button @click="openDelete = true; deleteProduct = {{ $p->toJson() }}" type="button"
                   class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
                   Delete
                 </button>
@@ -98,10 +98,10 @@
     <div class="bg-white rounded-lg p-6 w-full max-w-sm text-center">
       <h2 class="text-lg font-bold mb-4">Delete Product</h2>
       <p class="mb-6">Are you sure you want to delete
-        <span class="font-semibold text-red-600" x-text="product.name"></span>?
+        <span class="font-semibold text-red-600" x-text="deleteProduct.name"></span>?
       </p>
 
-      <form :action="'/admin/products/' + product.id" method="POST" class="flex justify-center gap-2">
+      <form :action="'/admin/products/' + deleteProduct.id" method="POST" class="flex justify-center gap-2">
         @csrf
         @method('DELETE')
         <button type="button" @click="openDelete = false" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
@@ -123,18 +123,12 @@
         searchPlaceholder: "🔍 Search product name...",
         lengthMenu: "Show _MENU_ entries",
         info: "Showing _START_ to _END_ of _TOTAL_ products",
-        paginate: {
-          previous: "← Prev",
-          next: "Next →"
-        }
+        paginate: { previous: "← Prev", next: "Next →" }
       },
-      columnDefs: [
-        { orderable: false, targets: [0, -1] }, // Image & Actions non-sortable
-      ],
-      order: [[1, "asc"]], // default order by Name (col 1)
+      columnDefs: [{ orderable: false, targets: [0, -1] }],
+      order: [[1, "asc"]]
     });
 
-    // Override pencarian biar hanya di kolom "Name" (index 1)
     $('#productsTable_filter input').off().on('keyup change', function () {
       table.column(1).search(this.value).draw();
     });
