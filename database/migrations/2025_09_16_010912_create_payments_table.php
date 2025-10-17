@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void {
+    public function up(): void
+    {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->nullable()->constrained('orders')->cascadeOnDelete()->cascadeOnUpdate()->unique();
+            $table->foreignId('order_id')
+                  ->nullable()
+                  ->unique()
+                  ->constrained('orders')
+                  ->nullOnDelete()
+                  ->cascadeOnUpdate();
             $table->decimal('amount', 10, 2);
             $table->enum('payment_method', ['bank_transfer','e_wallet']);
             $table->enum('status', ['admin_validation','paid','rejected'])->default('admin_validation');
@@ -20,9 +23,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('payments');
