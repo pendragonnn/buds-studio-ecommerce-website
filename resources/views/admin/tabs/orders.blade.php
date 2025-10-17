@@ -86,10 +86,10 @@
             </td>
             <td class="px-4 py-3 text-center">
               <span class="px-3 py-1 rounded-full text-xs font-semibold
-                    @if($o->status == 'completed') bg-green-100 text-green-700
-                    @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
-                    @elseif($o->status == 'cancelled') bg-red-100 text-red-700
-                    @else bg-blue-100 text-blue-700 @endif">
+                      @if($o->status == 'completed') bg-green-100 text-green-700
+                      @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
+                      @elseif($o->status == 'cancelled') bg-red-100 text-red-700
+                      @else bg-blue-100 text-blue-700 @endif">
                 {{ ucfirst($o->status) }}
               </span>
             </td>
@@ -159,22 +159,32 @@
   <div x-show="openView" x-cloak class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
     <div class="bg-white rounded-lg p-6 w-full max-w-lg">
       <h2 class="text-lg font-bold mb-4">Order Detail</h2>
+
       <p><strong>Order ID:</strong> <span x-text="order.id"></span></p>
-      <p><strong>Customer:</strong> <span x-text="order.user.name"></span></p>
-      <p><strong>Total:</strong> Rp <span x-text="order.total_amount"></span></p>
+      <p><strong>Customer:</strong> <span x-text="order.user?.name ?? 'Unknown User'"></span></p>
+      <p><strong>Total:</strong> Rp <span x-text="Number(order.total_amount).toLocaleString()"></span></p>
       <p><strong>Status:</strong> <span x-text="order.status"></span></p>
 
       <h3 class="mt-4 font-semibold">Items</h3>
-      <ul class="list-disc pl-6">
-        <template x-for="item in order.order_details" :key="item.id">
-          <li>
-            <span x-text="item.product.name"></span> - Qty: <span x-text="item.quantity"></span>
-          </li>
+      <ul class="list-disc pl-6 space-y-1">
+        <template x-if="order.order_details && order.order_details.length">
+          <template x-for="item in order.order_details" :key="item.id">
+            <li>
+              <span x-text="item.product && item.product.name ? item.product.name : '🗑️ Product data deleted'"></span>
+              | Qty: <span x-text="item.quantity"></span>
+            </li>
+          </template>
+        </template>
+
+        <template x-if="!order.order_details || order.order_details.length === 0">
+          <li class="text-gray-500">🗑️ Product data deleted</li>
         </template>
       </ul>
 
       <div class="mt-4 flex justify-end">
-        <button @click="openView = false" class="px-4 py-2 bg-gray-300 rounded-lg">Close</button>
+        <button @click="openView = false" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition-colors">
+          Close
+        </button>
       </div>
     </div>
   </div>
