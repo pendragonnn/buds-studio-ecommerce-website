@@ -1,4 +1,4 @@
-<div class="bg-white shadow rounded-xl p-6" x-data="{ mode: 'add', user: {}, openDelete: false }">
+<div class="bg-white shadow rounded-xl p-6" x-data="{ mode: 'add', user: {}, openDelete: false, deleteUser: {} }">
 
   <h3 class="text-lg font-semibold mb-4">User Management</h3>
 
@@ -65,7 +65,7 @@
                 class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
                 Edit
               </button>
-              <button type="button" @click="openDelete = true; user = {{ $u->toJson() }}"
+              <button type="button" @click="openDelete = true; deleteUser = {{ $u->toJson() }}"
                 class="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
                 Delete
               </button>
@@ -81,10 +81,10 @@
     <div class="bg-white rounded-lg p-6 w-full max-w-sm text-center">
       <h2 class="text-lg font-bold mb-4">Delete User</h2>
       <p class="mb-6">Are you sure you want to delete
-        <span class="font-semibold text-red-600" x-text="user.name"></span>?
+        <span class="font-semibold text-red-600" x-text="deleteUser.name"></span>?
       </p>
 
-      <form :action="'/admin/users/' + user.id" method="POST" class="flex justify-center gap-2">
+      <form :action="'/admin/users/' + deleteUser.id" method="POST" class="flex justify-center gap-2">
         @csrf
         @method('DELETE')
         <button type="button" @click="openDelete = false" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
