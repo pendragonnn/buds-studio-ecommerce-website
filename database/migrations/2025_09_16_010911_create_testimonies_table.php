@@ -11,9 +11,11 @@ return new class extends Migration
         Schema::create('testimonies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_detail_id')
+                  ->nullable()
                   ->unique()
                   ->constrained('order_details')
-                  ->onDelete('cascade'); 
+                  ->nullOnDelete()
+                  ->cascadeOnUpdate();
             $table->tinyInteger('rating'); // 1-5
             $table->text('comment')->nullable();
             $table->timestamps();

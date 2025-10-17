@@ -34,12 +34,12 @@ class TestimonySeeder extends Seeder
                 'comment' => 'Phone strap candy pop-nya lucu banget, warnanya cerah dan playful. Anakku suka! Pengiriman sedikit telat tapi produknya bagus.',
             ],
             [
-                'order_detail_id' => 17, // Simple Glossy Light Pink Nails
+                'order_detail_id' => 15, // Simple Glossy Light Pink Nails
                 'rating' => 5,
                 'comment' => 'Press-on Simple Pink Glossy ini sempurna buat daily, terlihat natural dan gampang diaplikasikan. Love it!',
             ],
             [
-                'order_detail_id' => 18, // Dark Star Galaxy Phone Strap
+                'order_detail_id' => 16, // Dark Star Galaxy Phone Strap
                 'rating' => 4,
                 'comment' => 'Phone strap Dark Star-nya keren banget, cocok buat style gothic minimalis. Awalnya ragu tapi ternyata kokoh. Good value for money.',
             ],
