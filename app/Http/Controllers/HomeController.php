@@ -36,24 +36,37 @@ class HomeController extends Controller
         }
 
         // Ratings summary
-        $reviews = Testimony::with(['orderDetail.product', 'orderDetail.order.user'])->latest()->get();
+        $reviews = Testimony::with(['orderDetail.product', 'orderDetail.order.user'])
+            ->whereHas('orderDetail.order.user')
+            ->whereHas('orderDetail.product')
+            ->latest()
+            ->get();
+
         $totalReviews = $reviews->count();
         $averageRating = $reviews->avg('rating');
         $fiveStarReviews = $reviews->where('rating', 5)->count();
 
         $testimonies = Testimony::with(['orderDetail.order.user'])
+            ->whereHas('orderDetail.order.user')
             ->orderByDesc('rating')
             ->orderByDesc('created_at')
             ->take(6)
             ->get();
 
         $products = Product::with('category')
-            ->withAvg('testimonies as avg_rating', 'rating')
+            ->withAvg([
+                'testimonies as avg_rating' => function ($query) {
+                    $query->whereHas('orderDetail.order.user') 
+                        ->whereHas('orderDetail.product');  
+                }
+            ], 'rating')
             ->withSum([
                 'orderDetails as total_sold' => function ($query) {
                     $query->whereHas('order', function ($q) {
-                        $q->where('status', 'completed'); // hanya hitung yang completed
-                    });
+                        $q->where('status', 'completed'); 
+                    })
+                        ->whereHas('product')                 
+                        ->whereHas('order.user');             
                 }
             ], 'quantity')
             ->get();
