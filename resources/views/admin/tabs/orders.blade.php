@@ -80,16 +80,20 @@
         @foreach ($orders as $o)
           <tr class="hover:bg-pink-50 transition">
             <td class="px-4 py-3 text-center font-medium text-gray-800">#{{ $o->id }}</td>
-            <td class="px-4 py-3 text-center">{{ $o->user->name }}</td>
+            <td class="px-4 py-3 text-center">
+              <span class="{{ $o->user ? '' : 'italic text-gray-500' }}">
+                {{ $o->user ? $o->user->name : 'Deleted User' }}
+              </span>
+            </td>
             <td class="px-4 py-3 text-center font-semibold text-pink-600">
               Rp {{ number_format($o->total_amount, 0, ',', '.') }}
             </td>
             <td class="px-4 py-3 text-center">
               <span class="px-3 py-1 rounded-full text-xs font-semibold
-                      @if($o->status == 'completed') bg-green-100 text-green-700
-                      @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
-                      @elseif($o->status == 'cancelled') bg-red-100 text-red-700
-                      @else bg-blue-100 text-blue-700 @endif">
+                              @if($o->status == 'completed') bg-green-100 text-green-700
+                              @elseif($o->status == 'pending') bg-yellow-100 text-yellow-700
+                              @elseif($o->status == 'cancelled') bg-red-100 text-red-700
+                              @else bg-blue-100 text-blue-700 @endif">
                 {{ ucfirst($o->status) }}
               </span>
             </td>
@@ -161,7 +165,12 @@
       <h2 class="text-lg font-bold mb-4">Order Detail</h2>
 
       <p><strong>Order ID:</strong> <span x-text="order.id"></span></p>
-      <p><strong>Customer:</strong> <span x-text="order.user?.name ?? 'Unknown User'"></span></p>
+      <p>
+        <strong>Customer:</strong>
+        <span :class="!order.user?.name ? 'italic text-gray-500' : ''" x-text="order.user?.name ?? 'Deleted User'">
+        </span>
+      </p>
+
       <p><strong>Total:</strong> Rp <span x-text="Number(order.total_amount).toLocaleString()"></span></p>
       <p><strong>Status:</strong> <span x-text="order.status"></span></p>
 
@@ -170,14 +179,18 @@
         <template x-if="order.order_details && order.order_details.length">
           <template x-for="item in order.order_details" :key="item.id">
             <li>
-              <span x-text="item.product && item.product.name ? item.product.name : '🗑️ Product data deleted'"></span>
-              | Qty: <span x-text="item.quantity"></span>
+              <span :class="item.product ? '' : 'italic text-gray-500'"
+                x-text="item.product && item.product.name ? item.product.name : '🗑️ Product data deleted'">
+              </span>
+              | Qty:
+              <span :class="!item.product ? 'italic text-gray-500' : ''" x-text="item.product ? item.quantity : '-'">
+              </span>
             </li>
           </template>
         </template>
 
         <template x-if="!order.order_details || order.order_details.length === 0">
-          <li class="text-gray-500">🗑️ Product data deleted</li>
+          <li class="text-gray-500 italic">🗑️ Product data deleted</li>
         </template>
       </ul>
 
